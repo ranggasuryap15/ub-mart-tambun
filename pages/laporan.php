@@ -7,7 +7,7 @@
 
 <body>
     <div class="container">
-        <p>Ini adalah Home Page</p>
+        <p>Ini adalah Laporan Page</p>
     </div>
 </body>
 

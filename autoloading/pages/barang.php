@@ -11,28 +11,28 @@
             <div class="container text-bg-light rounded-5 p-4 ">
                 <h3 class="text-center border-bottom mb-5">Input Barang</h3>
                 <form action="">
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="kodeBarang" value="">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="namaBarang" value="">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="hargaBarang" value="">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Stok Barang</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="stokBarang" value="">
+                            <input type="number" class="form-control" id="stokBarang" value="" min=0>
                         </div>
                     </div>
                     <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Tambah">

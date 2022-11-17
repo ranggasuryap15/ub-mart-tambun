@@ -11,53 +11,53 @@
             <div class="container text-bg-light rounded-5 p-4">
                 <h3 class="align-items-center text-center border-bottom mb-3">Input Transaksi</h3>
                 <form action="">
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="tglTransaksi" value="">
+                            <input type="text" readonly class="form-control" id="tglTransaksi" value="" disabled>
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="kodeBarangTransaksi">
+                            <input type="text" class="form-control" id="kodeBarangTransaksi">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="namaBarangTransaksi">
+                            <input type="text" readonly class="form-control" id="namaBarangTransaksi" disabled>
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="hargaTransaksi">
+                            <input type="text" class="form-control" id="hargaTransaksi" disabled>
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Jumlah Barang</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="qtyTransaksi">
+                            <input type="number" class="form-control" id="qtyTransaksi" min=0>
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Sub-Total</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control-plaintext" id="subTotalTransaksi">
-                            <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Tambah">
+                            <input type="text" readonly class="form-control" id="subTotalTransaksi">
                         </div>
+                        <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Tambah">
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Bayar</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="transaksiBayar">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kembalian</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control-plaintext" id="transaksiKembalian">
+                            <input type="text" class="form-control" id="transaksiKembalian" disabled>
                         </div>
                     </div>
                 </form>

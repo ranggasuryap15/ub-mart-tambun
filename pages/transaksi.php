@@ -14,38 +14,37 @@
                     <div class="mb-3 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control-plaintext" id="transaksiTgl" value="">
+                            <input type="text" readonly class="form-control" id="tglTransaksi" value="">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="transaksiKodeBarang">
+                            <input type="text" readonly class="form-control" id="kodeBarangTransaksi">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="transaksiNamaBarang">
+                            <input type="text" readonly class="form-control" id="namaBarangTransaksi">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="" class="col-form-label fs-5">Harga</label>
+                        <label for="" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="transaksiHargaBarang">
+                            <input type="text" class="form-control" id="hargaTransaksi">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="" class="col-form-label fs-5">Kuantitas</label>
+                        <label for="" class="col-form-label fs-5">Jumlah Barang</label>
                         <div class="input-group">
-                            <input type="number" class="form-control">
-                            <button class="btn btn-primary rounded-start" type="button">Tambah</button>
+                            <input type="number" class="form-control" id="qtyTransaksi">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="" class="col-form-label fs-5">Sub-Total</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control-plaintext" id="transaksiSubTotal">
+                            <input type="text" readonly class="form-control-plaintext" id="subTotalTransaksi">
                             <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Tambah">
                         </div>
                     </div>

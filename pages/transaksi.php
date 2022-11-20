@@ -60,6 +60,9 @@
                             <input type="text" class="form-control" id="transaksiKembalian" disabled>
                         </div>
                     </div>
+                    <div class="mb-1 row">
+                        <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Bayar">
+                    </div>
                 </form>
             </div>
         </section>
@@ -97,28 +100,28 @@
                         </thead>
                         <tbody class="table-group-divider">
                             <tr>
-                                <th scope="col-4" class="text-end">Detergen</th>
-                                <th scope="col-2" class="text-center">5</th>
-                                <th scope="col-3" class="text-center">Rp. 5.000</th>
-                                <th scope="col-3" class="text-start">Rp. 25.000</th>
+                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-2" class="text-center">5</td>
+                                <td scope="col-3" class="text-center">Rp. 5.000</td>
+                                <td scope="col-3" class="text-start">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <th scope="col-4" class="text-end">Detergen</th>
-                                <th scope="col-2" class="text-center">5</th>
-                                <th scope="col-3" class="text-center">Rp. 5.000</th>
-                                <th scope="col-3" class="text-start">Rp. 25.000</th>
+                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-2" class="text-center">5</td>
+                                <td scope="col-3" class="text-center">Rp. 5.000</td>
+                                <td scope="col-3" class="text-start">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <th scope="col-4" class="text-end">Detergen</th>
-                                <th scope="col-2" class="text-center">5</th>
-                                <th scope="col-3" class="text-center">Rp. 5.000</th>
-                                <th scope="col-3" class="text-start">Rp. 25.000</th>
+                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-2" class="text-center">5</td>
+                                <td scope="col-3" class="text-center">Rp. 5.000</td>
+                                <td scope="col-3" class="text-start">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <th scope="col-4" class="text-end">Detergen</th>
-                                <th scope="col-2" class="text-center">5</th>
-                                <th scope="col-3" class="text-center">Rp. 5.000</th>
-                                <th scope="col-3" class="text-start">Rp. 25.000</th>
+                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-2" class="text-center">5</td>
+                                <td scope="col-3" class="text-center">Rp. 5.000</td>
+                                <td scope="col-3" class="text-start">Rp. 25.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -126,15 +129,15 @@
                         <tbody>
                             <tr>
                                 <th class="align-items.center text-end" scope="col-6">Total</th>
-                                <th class="align-items.center text-start" scope="col-6">Rp. 100.000</th>
+                                <td class="align-items.center text-start" scope="col-6">Rp. 100.000</td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-end" scope="col-6">Bayar</th>
-                                <th class="align-items.center text-start" scope="col-6">Rp. 102.000</th>
+                                <td class="align-items.center text-start" scope="col-6">Rp. 102.000</td>
                             </tr>
                             <tr>
-                                <th class="align-items.center text-end" scope="col-6">Kembalian</th>
-                                <th class="align-items.center text-start" scope="col-6">Rp. 2.000</th>
+                                <th class="align-items.center text-end" scope="col-6">Kembalian</td>
+                                <td class="align-items.center text-start" scope="col-6">Rp. 2.000</td>
                             </tr>
                         </tbody>
                     </table>

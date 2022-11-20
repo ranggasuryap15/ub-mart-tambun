@@ -1,3 +1,10 @@
+<?php
+require_once (__DIR__ . "/../App/Class/Barang.php");
+require_once (__DIR__ . "/../App/Util.php");
+$util = new Util;
+$barang = new Barang;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,24 +60,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="col-2" class="text-center">row</th>
-                                <th scope="col-3" class="text-center">Detergen</th>
-                                <th scope="col-2" class="text-center">Rp. 8.000</th>
-                                <th scope="col-1" class="text-center">row</th>
-                            </tr>
-                            <tr>
-                                <th scope="col-2" class="text-center">row</th>
-                                <th scope="col-3" class="text-center">Detergen</th>
-                                <th scope="col-2" class="text-center">Rp. 8.000</th>
-                                <th scope="col-1" class="text-center">row</th>
-                            </tr>
-                            <tr>
-                                <th scope="col-2" class="text-center">row</th>
-                                <th scope="col-3" class="text-center">Detergen</th>
-                                <th scope="col-2" class="text-center">Rp. 8.000</th>
-                                <th scope="col-1" class="text-center">row</th>
-                            </tr>
+                            <?php 
+                                $allBarang = $barang->readBarang();
+
+                                foreach ($allBarang as $row) {
+                                    echo "<tr>";
+                                    echo    "<td scope='col-2' class='text-center'>". $row['kode_barang'] ."</td>";
+                                    echo    "<td scope='col-3' class='text-center'>". $row['nama_barang'] ."</td>";
+                                    echo    "<td scope='col-2' class='text-center'>". $util->rupiah($row['harga_jual']) ."</td>";
+                                    echo    "<td scope='col-1' class='text-center'>". $row['stok'] ."</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>

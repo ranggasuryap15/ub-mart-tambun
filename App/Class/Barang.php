@@ -80,7 +80,7 @@ class Barang extends Config {
     // Setter Getter AKhir
 
     // Function for table data_barang
-    public function tambahBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
+    public function createBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
         $sql = "INSERT INTO data_barang ('kode_barang, 'nama_barang', 'harga_pokok', 'harga_jual', 'profit', 'stok', 'satuan', 'tanggal') VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
         $data = $this->config->prepare($sql);
         $data->bindParam('kode_barang', $kode_barang);
@@ -103,5 +103,11 @@ class Barang extends Config {
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
+    }
+
+    public function updateStok() 
+    {
+        $sql = "UPDATE kasir_ub_mart.data_barang SET stok=? WHERE kode_barang=?";
+        $stmt = $this->pdo->prepare($sql);
     }
 }

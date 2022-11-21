@@ -21,28 +21,28 @@ $barang = new Barang;
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="kodeBarang" value="">
+                            <input type="text" class="form-control" id="kodeBarang" value="" disabled>
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="namaBarang" value="">
+                            <input type="text" class="form-control" id="namaBarang" value="" disabled>
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="hargaBarang" value="">
+                            <input type="text" class="form-control" id="hargaBarang" value="" disabled>
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Stok Barang</label>
+                        <label for="" class="col-form-label fs-5">Stok</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="stokBarang" value="" min=0>
                         </div>
                     </div>
-                    <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Tambah">
+                    <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Perbarui Stok">
                 </form>
             </div>
         </section>
@@ -50,7 +50,7 @@ $barang = new Barang;
             <div class="container text-bg-light rounded-5 p-3">
                 <h3 class="text-center border-bottom mb-5">Data Barang</h3>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover" id="table">
                         <thead>
                             <tr>
                                 <th scope="col-2" class="text-center">Kode Barang</th>
@@ -67,8 +67,8 @@ $barang = new Barang;
                                     echo "<tr>";
                                     echo    "<td scope='col-2' class='text-center'>". $row['kode_barang'] ."</td>";
                                     echo    "<td scope='col-3' class='text-center'>". $row['nama_barang'] ."</td>";
-                                    echo    "<td scope='col-2' class='text-center'>". $util->rupiah($row['harga_jual']) ."</td>";
-                                    echo    "<td scope='col-1' class='text-center'>". $row['stok'] ."</td>";
+                                    echo    "<td scope='col-2' class='text-center'>". $util->rupiah($row['harga_jual']) . "</td>";
+                                    echo    "<td scope='col-1' class='text-center'>". $row['stok'] . ' ' . $row['satuan'] . "</td>";
                                     echo "</tr>";
                                 }
                             ?>
@@ -78,6 +78,35 @@ $barang = new Barang;
             </div>
         </section>
     </div>
+    <script type="text/javascript">
+        // kirim data dari tabel ke form
+        var table = document.getElementById('table'), rIndex;
+
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].onclick = function() {
+                rIndex = this.rowIndex;
+                document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
+                document.getElementById("namaBarang").value = this.cells[1].innerHTML;
+                document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
+                document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
+            };
+        }
+
+        // klik aktif table
+        var activeTable = document.querySelectorAll('table tr');
+        activeTable.forEach(td => {
+            td.addEventListener("click", ()=> {
+                resetActive();
+                td.classList.add("table-active");
+            });
+        });
+
+        function resetActive() {
+            activeTable.forEach(td => {
+                td.classList.remove("table-active");
+            });
+        }
+    </script>
 </body>
 
 </html>

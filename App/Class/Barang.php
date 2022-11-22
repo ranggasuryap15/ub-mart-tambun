@@ -105,9 +105,16 @@ class Barang extends Config {
         return $result;
     }
 
-    public function updateStok() 
+    public function updateStok($kode_barang, $stok) 
     {
-        $sql = "UPDATE kasir_ub_mart.data_barang SET stok=? WHERE kode_barang=?";
-        $stmt = $this->pdo->prepare($sql);
+        try {
+            $sql = "UPDATE kasir_ub_mart.data_barang SET stok=:stok WHERE kode_barang=:kode_barang";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam('stok', $stok);
+            $stmt->bindParam('kode_barang', $kode_barang);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Update stok gagal. <br>" . $e->getMessage();
+        }
     }
 }

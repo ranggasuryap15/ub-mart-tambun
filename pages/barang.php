@@ -17,32 +17,32 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4 ">
                 <h3 class="text-center border-bottom mb-5">Input Barang</h3>
-                <form action="/App/Action.php">
+                <form action="/ub-mart-tambun/App/Action.php" method="post">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="kodeBarang" value="" disabled>
+                            <input type="text" class="form-control" id="kodeBarang" name="kodeBarang" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="namaBarang" value="" disabled>
+                            <input type="text" class="form-control" id="namaBarang" name="namaBarang" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="hargaBarang" value="" disabled>
+                            <input type="text" class="form-control" id="hargaBarang" name="hargaBarang" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Stok</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="stokBarang" value="" min=0>
+                            <input type="number" class="form-control" id="stokBarang" name="stokBarang" min=0>
                         </div>
                     </div>
-                    <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Perbarui Stok">
+                    <input class="btn btn-primary btn-lg rounded-pill my-4" type="submit" name="updateButton" value="Perbarui Stok">
                 </form>
             </div>
         </section>
@@ -78,6 +78,7 @@ $barang = new Barang;
             </div>
         </section>
     </div>
+
     <script type="text/javascript">
         // kirim data dari tabel ke form
         var table = document.getElementById('table'), rIndex;

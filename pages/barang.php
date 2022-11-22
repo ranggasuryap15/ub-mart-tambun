@@ -64,7 +64,7 @@ $barang = new Barang;
                                 $allBarang = $barang->readBarang();
 
                                 foreach ($allBarang as $row) {
-                                    echo "<tr>";
+                                    echo "<tr class='user-select-none'>";
                                     echo    "<td scope='col-2' class='text-center'>". $row['kode_barang'] ."</td>";
                                     echo    "<td scope='col-3' class='text-center'>". $row['nama_barang'] ."</td>";
                                     echo    "<td scope='col-2' class='text-center'>". $util->rupiah($row['harga_jual']) . "</td>";

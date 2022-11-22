@@ -17,7 +17,7 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4 ">
                 <h3 class="text-center border-bottom mb-5">Input Barang</h3>
-                <form action="">
+                <form action="/App/Action.php">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
@@ -50,7 +50,7 @@ $barang = new Barang;
             <div class="container text-bg-light rounded-5 p-3">
                 <h3 class="text-center border-bottom mb-5">Data Barang</h3>
                 <div class="table-responsive">
-                    <table class="table table-hover" id="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col-2" class="text-center">Kode Barang</th>
@@ -59,7 +59,7 @@ $barang = new Barang;
                                 <th scope="col-1" class="text-center">Stok Barang</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table">
                             <?php 
                                 $allBarang = $barang->readBarang();
 
@@ -93,7 +93,7 @@ $barang = new Barang;
         }
 
         // klik aktif table
-        var activeTable = document.querySelectorAll('table tr');
+        var activeTable = document.querySelectorAll('tbody tr');
         activeTable.forEach(td => {
             td.addEventListener("click", ()=> {
                 resetActive();

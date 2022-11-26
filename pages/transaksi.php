@@ -89,12 +89,12 @@ $barang = new Barang;
                     <table class="table container border-bottom">
                         <tbody>
                             <tr>
-                                <th class="align-items-center text-end" scope="col-6">NOTA: </th>
-                                <th class="align-items-center text-start" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
+                                <th class="align-items-center text-start" scope="col-6">NOTA: </th>
+                                <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
                             </tr>
                             <tr>
-                                <th class="align-items-center text-end" scope="col-6">KASIR: ADMIN</th>
-                                <th class="align-items-center text-start" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i:s')?></span></th>
+                                <th class="align-items-center text-start" scope="col-6">KASIR: ADMIN</th>
+                                <th class="align-items-center text-end" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i:s')?></span></th>
                             </tr>
                         </tbody>
                     </table>
@@ -109,44 +109,44 @@ $barang = new Barang;
                         </thead>
                         <tbody class="table-group-divider">
                             <tr>
-                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-4" class="text-start">Detergen</td>
                                 <td scope="col-2" class="text-center">5</td>
                                 <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-start">Rp. 25.000</td>
+                                <td scope="col-3" class="text-end">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-4" class="text-start">Detergen</td>
                                 <td scope="col-2" class="text-center">5</td>
                                 <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-start">Rp. 25.000</td>
+                                <td scope="col-3" class="text-end">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-4" class="text-start">Detergen</td>
                                 <td scope="col-2" class="text-center">5</td>
                                 <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-start">Rp. 25.000</td>
+                                <td scope="col-3" class="text-end">Rp. 25.000</td>
                             </tr>
                             <tr>
-                                <td scope="col-4" class="text-end">Detergen</td>
+                                <td scope="col-4" class="text-start">Detergen</td>
                                 <td scope="col-2" class="text-center">5</td>
                                 <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-start">Rp. 25.000</td>
+                                <td scope="col-3" class="text-end">Rp. 25.000</td>
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table">
+                    <table class="table table-group-divider">
                         <tbody>
                             <tr>
-                                <th class="align-items.center text-end" scope="col-6">Total</th>
-                                <td class="align-items.center text-start" scope="col-6">Rp. 100.000</td>
+                                <th class="align-items.center text-start" scope="col-6">Total</th>
+                                <td class="align-items.center text-end" scope="col-6">Rp. 100.000</td>
                             </tr>
                             <tr>
-                                <th class="align-items.center text-end" scope="col-6">Bayar</th>
-                                <td class="align-items.center text-start" scope="col-6">Rp. 102.000</td>
+                                <th class="align-items.center text-start" scope="col-6">Bayar</th>
+                                <td class="align-items.center text-end" scope="col-6">Rp. 102.000</td>
                             </tr>
                             <tr>
-                                <th class="align-items.center text-end" scope="col-6">Kembalian</td>
-                                <td class="align-items.center text-start" scope="col-6">Rp. 2.000</td>
+                                <th class="align-items.center text-start" scope="col-6">Kembalian</td>
+                                <td class="align-items.center text-end" scope="col-6">Rp. 2.000</td>
                             </tr>
                         </tbody>
                     </table>

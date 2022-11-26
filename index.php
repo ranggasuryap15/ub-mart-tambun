@@ -11,10 +11,8 @@
 
     <!-- NANTI PAGENYA GAUSAH INISIALISASI LINK2NYA, SCRIPTNYA, METANYA, DLL DIDALEM HEAD SELAIN TITLE AJA YAA!!. Contohnya kyk page home -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -77,7 +75,7 @@
             </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
     <script src="/assets/js/autocalc.js" crossorigin="anonymous"></script>
     <script src="/assets/js/main.js"></script>

@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- SCRIPT -->
+    <script src="assets/js/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/autocalc.js" crossorigin="anonymous"></script>
+    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -75,10 +81,7 @@
             </div>
         </div>
     </footer>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/js/autocalc.js" crossorigin="anonymous"></script>
-    <script src="/assets/js/main.js"></script>
+    
 </body>
 
 </html>

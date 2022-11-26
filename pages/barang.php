@@ -80,7 +80,7 @@ $barang = new Barang;
     </div>
 
     <script type="text/javascript">
-        // kirim data dari tabel ke form
+        // kirim data dari tabel ke form ketika di klik
         var table = document.getElementById('table'), rIndex;
 
         for (var i = 0; i < table.rows.length; i++) {

@@ -154,49 +154,6 @@ $barang = new Barang;
             </div>
         </section>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $("#kodeBarangTransaksi").keypress(function(event) {
-                // jika field kodeBarangTransaksi ditekan enter maka akan muncul
-                if (event.keyCode == 13 && event.target.value!="") {
-                    var kodeBarang = this.value; // input dari form
-                    var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php";
-                    var harga = document.querySelector("#hargaTransaksi").value;
-                    var expression = new RegExp(kodeBarang, "i"); // searching live
-
-                    $.getJSON(url, function(data) {
-                        $.each(data, function(key, value) {
-                            if (value.kode_barang.search(expression) != -1) {
-                                // output
-                                $("#namaBarangTransaksi").val(value.nama_barang);
-                                $("#hargaTransaksi").val(value.harga_jual);
-                                $("#qtyTransaksi").val("1");
-                                $("#subTotalTransaksi").val(value.harga_jual);
-
-                                $("#qtyTransaksi").on('input', function() {
-                                    var hargaTransaksi = $("#hargaTransaksi").val();
-                                    var qtyTransaksi = $("#qtyTransaksi").val();
-                                    var subTotal = hargaTransaksi * qtyTransaksi;
-                                    $("#subTotalTransaksi").val(subTotal);
-                                });
-                            }
-                        });
-                    });
-                }     
-            });
-
-            // reset form
-            $("#kodeBarangTransaksi").on('input', function(){
-                if (event.target.value=="") {
-                    $("#namaBarangTransaksi").val("");
-                    $("#hargaTransaksi").val("");
-                    $("#qtyTransaksi").val("");
-                    $("#subTotalTransaksi").val("");
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

@@ -28,44 +28,44 @@ $barang = new Barang;
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Kode Barang</label>
+                        <label for="kodeBarangTransaksi" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="kodeBarangTransaksi" name="kodeBarangTransaksi">
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Nama Barang</label>
+                        <label for="namaBarangTransaksi" class="col-form-label fs-5">Nama Barang</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="namaBarangTransaksi" name="namaBarangTransaksi" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Harga Barang</label>
+                        <label for="hargaTransaksi" class="col-form-label fs-5">Harga Barang</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="hargaTransaksi" name="hargaTransaksi" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Jumlah Barang</label>
+                        <label for="qtyTransaksi" class="col-form-label fs-5">Jumlah Barang</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="qtyTransaksi" name="qtyTransaksi" min=0>
+                            <input type="number" class="form-control" id="qtyTransaksi" name="qtyTransaksi" min=1>
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Sub-Total</label>
+                        <label for="subTotalTransaksi" class="col-form-label fs-5">Sub-Total</label>
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="subTotalTransaksi" name="subTotalTransaksi">
                         </div>
                         <input class="btn btn-primary btn-lg rounded-pill my-4" type="submit" value="Tambah">
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Bayar</label>
+                        <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="transaksiBayar" name="transaksiBayar">
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <label for="" class="col-form-label fs-5">Kembalian</label>
+                        <label for="transaksiKembalian" class="col-form-label fs-5">Kembalian</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="transaksiKembalian" readonly>
                         </div>
@@ -157,29 +157,45 @@ $barang = new Barang;
     </div>
 
     <script>
-
-        
         $(document).ready(function() {
-
-
             $("#kodeBarangTransaksi").keypress(function(event) {
-                // jika field kodeBarangTransaksi ditekan enter
-                if (event.keyCode == 13 && event.target.value!="" ) {
+                // jika field kodeBarangTransaksi ditekan enter maka akan muncul
+                if (event.keyCode == 13 && event.target.value!="") {
                     var kodeBarang = this.value; // input dari form
-                    var expression = new RegExp(kodeBarang, "i");
                     var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php";
-                    
+                    var harga = document.querySelector("#hargaTransaksi").value;
+                    var expression = new RegExp(kodeBarang, "i"); // searching live
+
                     $.getJSON(url, function(data) {
                         $.each(data, function(key, value) {
                             if (value.kode_barang.search(expression) != -1) {
+                                // output
                                 $("#namaBarangTransaksi").val(value.nama_barang);
                                 $("#hargaTransaksi").val(value.harga_jual);
+                                $("#qtyTransaksi").val("1");
+                                $("#subTotalTransaksi").val(value.harga_jual);
+
+                                $("#qtyTransaksi").on('input', function() {
+                                    var hargaTransaksi = $("#hargaTransaksi").val();
+                                    var qtyTransaksi = $("#qtyTransaksi").val();
+                                    var subTotal = hargaTransaksi * qtyTransaksi;
+                                    $("#subTotalTransaksi").val(subTotal);
+                                });
                             }
                         });
                     });
+                }     
+            });
+
+            // reset form
+            $("#kodeBarangTransaksi").on('input', function(){
+                if (event.target.value=="") {
+                    $("#namaBarangTransaksi").val("");
+                    $("#hargaTransaksi").val("");
+                    $("#qtyTransaksi").val("");
+                    $("#subTotalTransaksi").val("");
                 }
             });
-            
         });
     </script>
 </body>

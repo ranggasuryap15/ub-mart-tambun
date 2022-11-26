@@ -4,7 +4,6 @@ require_once(__DIR__ . "/../Class/Barang.php");
 
 $barang = new Barang;
 
-$kodeBarang = "8901234775";
 $barang = $barang->readBarang();
 $result = array();
 

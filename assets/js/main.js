@@ -29,3 +29,5 @@ input.addEventListener('keyup', function(e)
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 });
+
+// JSON dari MySQL ditampilkan dan di searching

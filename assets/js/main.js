@@ -1,15 +1,15 @@
-$(document).ready(function() {
-    setInterval(timestamp, 1000);
-});
+// $(document).ready(function() {
+//     setInterval(timestamp, 1000);
+// });
 
-function timestamp() {
-    $.ajax({
-        url: 'http://localhost/timestamp.php',
-        success: function(data) {
-            $('#timestamp').html(data);
-        },
-    });
-}
+// function timestamp() {
+//     $.ajax({
+//         url: 'http://localhost/timestamp.php',
+//         success: function(data) {
+//             $('#timestamp').html(data);
+//         },
+//     });
+// }
 
 // format rupiah
 var input = document.getElementById('transaksiBayar');
@@ -46,9 +46,21 @@ $(document).ready(function() {
                         // output
                         $("#namaBarangTransaksi").val(value.nama_barang);
                         $("#hargaTransaksi").val(value.harga_jual);
-                        $("#qtyTransaksi").val("1");
-                        $("#subTotalTransaksi").val(value.harga_jual);
+                        
+                        // set min max stok
+                        if (value.stok <= 0) {
+                            $("#qtyTransaksi").prop('min', 0);
+                            $("#qtyTransaksi").val("0");
+                            $("#subTotalTransaksi").val("0");
+                        } else {
+                            $("#qtyTransaksi").prop('min', 1);
+                            $("#qtyTransaksi").val("1");
+                            $("#subTotalTransaksi").val(value.harga_jual);
+                        }
 
+                        $("#qtyTransaksi").prop('max', value.stok);
+
+                        // merubah harga sesuai dengan jumlah barang
                         $("#qtyTransaksi").on('input', function() {
                             var hargaTransaksi = $("#hargaTransaksi").val();
                             var qtyTransaksi = $("#qtyTransaksi").val();
@@ -62,7 +74,7 @@ $(document).ready(function() {
     });
 
     // reset form
-    $("#kodeBarangTransaksi").on('input', function(){
+    $("#kodeBarangTransaksi").on('input', function(event){
         if (event.target.value=="") {
             $("#namaBarangTransaksi").val("");
             $("#hargaTransaksi").val("");

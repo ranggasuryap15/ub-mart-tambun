@@ -17,8 +17,6 @@
     <!-- SCRIPT -->
     <script src="assets/js/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/autocalc.js" crossorigin="anonymous"></script>
-    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -81,7 +79,9 @@
             </div>
         </div>
     </footer>
-    
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/autocalc.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

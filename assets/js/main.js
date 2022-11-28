@@ -36,8 +36,7 @@ $(document).ready(function() {
         // jika field kodeBarangTransaksi ditekan enter maka akan muncul
         if (event.keyCode == 13 && event.target.value!="") {
             var kodeBarang = this.value; // input dari form
-            var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php";
-            var harga = document.querySelector("#hargaTransaksi").value;
+            var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php"; // url json from mysql
             var expression = new RegExp(kodeBarang, "i"); // searching live
 
             $.getJSON(url, function(data) {
@@ -66,12 +65,32 @@ $(document).ready(function() {
                             var qtyTransaksi = $("#qtyTransaksi").val();
                             var subTotal = hargaTransaksi * qtyTransaksi;
                             $("#subTotalTransaksi").val(subTotal);
+
+                            // max length
+                            if (this.value.length > 4) {
+                                this.value = this.value.slice(0,4);
+                            }
                         });
                     }
                 });
             });
         }     
     });
+
+    $('#qtyTransaksi').on('keypress', function() {
+        limitText(this, 10)
+    });
+    
+    function limitText(field, maxChar){
+        var ref = $(field),
+            val = ref.val();
+        if ( val.length >= maxChar ){
+            ref.val(function() {
+                console.log(val.substr(0, maxChar))
+                return val.substr(0, maxChar);       
+            });
+        }
+    }
 
     // reset form
     $("#kodeBarangTransaksi").on('input', function(event){

@@ -9,7 +9,7 @@ $barang = new Barang;
 <html lang="en">
 
 <head>
-    <title>Barang</title>
+    <title>Kasir | Barang</title>
 </head>
 
 <body class="text-bg-secondary">
@@ -78,8 +78,7 @@ $barang = new Barang;
             </div>
         </section>
     </div>
-
-    <script type="text/javascript">
+    <script>
         // kirim data dari tabel ke form ketika di klik
         var table = document.getElementById('table'), rIndex;
 
@@ -93,7 +92,7 @@ $barang = new Barang;
             };
         }
 
-        // klik aktif table
+        // klik aktif table - start
         var activeTable = document.querySelectorAll('tbody tr');
         activeTable.forEach(td => {
             td.addEventListener("click", ()=> {
@@ -107,6 +106,7 @@ $barang = new Barang;
                 td.classList.remove("table-active");
             });
         }
+        // klik aktif table - end
     </script>
 </body>
 

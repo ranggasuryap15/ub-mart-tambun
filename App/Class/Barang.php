@@ -105,6 +105,16 @@ class Barang extends Config {
         return $result;
     }
 
+    public function readBarangByKode($kode_barang) 
+    {
+        $sql = "SELECT * FROM kasir_ub_mart.data_barang WHERE kode_barang=:kode_barang";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kode_barang', $kode_barang);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result;
+    }
+
     public function updateStok($kode_barang, $stok) 
     {
         try {

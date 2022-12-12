@@ -16,7 +16,7 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4">
                 <h3 class="align-items-center text-center border-bottom mb-3">Input Transaksi</h3>
-                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13">
+                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13" action="/ub-mart-tambun/App/Util/add-transaksi-temp.php">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
@@ -52,7 +52,7 @@ $barang = new Barang;
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="subTotalTransaksi" name="subTotalTransaksi">
                         </div>
-                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="button" value="Tambah" id="btnTambah">
+                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
                     </div>
                     <div class="mb-1 row">
                         <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
@@ -120,7 +120,4 @@ $barang = new Barang;
             </div>
         </section>
     </div>
-    <script>
-        
-    </script>
 </body>

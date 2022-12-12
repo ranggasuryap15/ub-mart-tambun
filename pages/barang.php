@@ -83,30 +83,29 @@ $barang = new Barang;
         var table = document.getElementById('table'), rIndex;
 
         for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function() {
-                rIndex = this.rowIndex;
-                document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
-                document.getElementById("namaBarang").value = this.cells[1].innerHTML;
-                document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
-                document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-            };
+        table.rows[i].onclick = function() {
+            rIndex = this.rowIndex;
+            document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
+            document.getElementById("namaBarang").value = this.cells[1].innerHTML;
+            document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
+            document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
+        };
         }
 
         // klik aktif table - start
         var activeTable = document.querySelectorAll('tbody tr');
         activeTable.forEach(td => {
-            td.addEventListener("click", ()=> {
-                resetActive();
-                td.classList.add("table-active");
-            });
+        td.addEventListener("click", ()=> {
+            resetActive();
+            td.classList.add("table-active");
+        });
         });
 
         function resetActive() {
-            activeTable.forEach(td => {
-                td.classList.remove("table-active");
-            });
+        activeTable.forEach(td => {
+            td.classList.remove("table-active");
+        });
         }
-        // klik aktif table - end
     </script>
 </body>
 

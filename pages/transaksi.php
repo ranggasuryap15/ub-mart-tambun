@@ -7,9 +7,6 @@ $barang = new Barang;
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <title>Transaksi</title>
 </head>
@@ -98,42 +95,11 @@ $barang = new Barang;
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table table-hover" id="tableStruk">
-                        <thead>
-                            <tr>
-                                <th scope="col-4" class="text-and">Nama Barang</th>
-                                <th scope="col-2" class="text-center">QTY</th>
-                                <th scope="col-3" class="text-center">Harga</th>
-                                <th scope="col-3" class="text-center">Sub Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            <tr class="user-select-none">
-                                <td scope="col-4" class="text-start">Detergen</td>
-                                <td scope="col-2" class="text-center">5</td>
-                                <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-end">Rp. 25.000</td>
-                            </tr>
-                            <tr class="user-select-none">
-                                <td scope="col-4" class="text-start">Detergen</td>
-                                <td scope="col-2" class="text-center">5</td>
-                                <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-end">Rp. 25.000</td>
-                            </tr>
-                            <tr class="user-select-none">
-                                <td scope="col-4" class="text-start">Cimory</td>
-                                <td scope="col-2" class="text-center">5</td>
-                                <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-end">Rp. 25.000</td>
-                            </tr>
-                            <tr class="user-select-none">
-                                <td scope="col-4" class="text-start">Detergen</td>
-                                <td scope="col-2" class="text-center">5</td>
-                                <td scope="col-3" class="text-center">Rp. 5.000</td>
-                                <td scope="col-3" class="text-end">Rp. 25.000</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div id="tableStruk">
+                        <!-- dinamis table -->
+                    </div>
+                    
                     <table class="table table-group-divider">
                         <thead>
                             <tr>
@@ -155,59 +121,6 @@ $barang = new Barang;
         </section>
     </div>
     <script>
-
-        var table = document.getElementById('tableStruk'), rIndex;
-
-        for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function() {
-                rIndex = this.rowIndex;
-                document.getElementById("namaBarangTransaksi").value = this.cells[0].innerHTML;
-                document.getElementById("qtyTransaksi").value = this.cells[1].innerHTML;
-                document.getElementById("hargaTransaksi").value = this.cells[2].innerHTML;
-                document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-            };
-        }
-        // klik aktif table - start
-        var activeTable = document.querySelectorAll('tbody tr');
-        activeTable.forEach(td => {
-            td.addEventListener("click", ()=> {
-                resetActive();
-                td.classList.add("table-active");
-            });
-        });
-
-        function resetActive() {
-            activeTable.forEach(td => {
-                td.classList.remove("table-active");
-            });
-        }
-        // klik aktif table - end
-
-        // add row table javascript
-        var btnAdd = document.getElementById("btnTambah");
-        var table = document.getElementById("tableStruk");
-
-        var namaBarangInput = document.getElementById("namaBarangTransaksi");
-        var hargaBarangInput = document.getElementById("hargaTransaksi");
-        var qtyTransaksiInput = document.getElementById("qtyTransaksi");
-        var subTotalInput = document.getElementById("subTotalTransaksi");
-
-        btnAdd.addEventListener('click', function() {
-            var namaBarang = namaBarangInput.value;
-            var hargaBarang = hargaBarangInput.value;
-            var qtyTransaksi = qtyTransaksiInput.value;
-            var subTotal = subTotalInput.value;
-
-            var template = `
-                        <tr>
-                            <td scope="col-4" class="text-start">${namaBarang}</td>
-                            <td scope="col-2" class="text-center">${qtyTransaksi}</td>
-                            <td scope="col-3" class="text-center">${hargaBarang}</td>
-                            <td scope="col-3" class="text-end">${subTotal}</td>
-                        </tr>`;
-            table.innerHTML += template;
-        });
+        
     </script>
 </body>
-
-</html>

@@ -17,7 +17,7 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4 ">
                 <h3 class="text-center border-bottom mb-5">Input Barang</h3>
-                <form action="/ub-mart-tambun/App/Action.php" method="post">
+                <form action="/ub-mart-tambun/App/Util/update-barang.php" method="post">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">

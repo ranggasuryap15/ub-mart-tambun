@@ -104,7 +104,7 @@ $barang = new Barang;
                         <thead>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Total</th>
-                                <td class="align-items.center text-end" scope="col-6">Rp. 100.000</td>
+                                <td class="align-items.center text-end" scope="col-6" id="test">Rp. 100.000</td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Bayar</th>
@@ -124,14 +124,14 @@ $barang = new Barang;
         $(document).ready(function() {
 
             // input search kode_barang
-            var kodeBarang = $("#kodeBarangTransaksi").val();
+            // var kodeBarang = $("#kodeBarangTransaksi").val();
             var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php"; // url json from mysql
-            var expression = new RegExp(kodeBarang, "i"); // searching live
 
             $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
                     $("#kodeBarangTransaksi").keypress(function(event) {
-
+                        var kodeBarang = this.value;
+                        var expression = new RegExp(kodeBarang, "i"); // searching live
                         // jika field kodeBarangTransaksi ditekan enter maka akan muncul
                         if(event.keyCode == 13 && event.target.value != "") {
                             if (value.kode_barang.search(expression) != -1) {
@@ -165,18 +165,19 @@ $barang = new Barang;
                                     }
                                 });
                             }
+                            // jika kode_barang tidak sesuai, maka langsung reset form
+                            $("#kodeBarangTransaksi").on('input', function() {
+                                if (this.value != (value.kode_barang.search(expression) != -1)) {
+                                    $("#namaBarangTransaksi").val("");
+                                    $("#hargaTransaksi").val("");
+                                    $("#qtyTransaksi").val("");
+                                    $("#subTotalTransaksi").val("");
+                                }
+                            });
                         }
                     });
 
-                    // jika kode_barang tidak sesuai, maka langsung reset form
-                    $("#kodeBarangTransaksi").on('input', function() {
-                        if (this.value != (value.kode_barang.search(expression) != -1)) {
-                            $("#namaBarangTransaksi").val("");
-                            $("#hargaTransaksi").val("");
-                            $("#qtyTransaksi").val("");
-                            $("#subTotalTransaksi").val("");
-                        }
-                    });
+                    
                 });
             });
 
@@ -201,34 +202,66 @@ $barang = new Barang;
                 xhttp.send();
             }
 
-            // table data kirim ke form
-            var table = document.getElementById('tableStruk'), rIndex;
+            // // table data kirim ke form
+            // var table = document.getElementById('tableStruk'), rIndex;
 
-            for (var i = 0; i < table.rows.length; i++) {
-                table.rows[i].onclick = function() {
-                    rIndex = this.rowIndex;
-                    document.getElementById("namaBarangTransaksi").value = this.cells[0].innerHTML;
-                    document.getElementById("qtyTransaksi").value = this.cells[1].innerHTML;
-                    document.getElementById("hargaTransaksi").value = this.cells[2].innerHTML;
-                    document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-                };
+            // for (var i = 0; i < table.rows.length; i++) {
+            //     table.rows[i].onclick = function() {
+            //         rIndex = this.rowIndex;
+            //         document.getElementById("namaBarangTransaksi").value = this.cells[0].innerHTML;
+            //         document.getElementById("qtyTransaksi").value = this.cells[1].innerHTML;
+            //         document.getElementById("hargaTransaksi").value = this.cells[2].innerHTML;
+            //         document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
+            //     };
+            // }
+
+            // // klik aktif table - start
+            // var activeTable = document.querySelectorAll('tbody tr');
+            // activeTable.forEach(td => {
+            //     td.addEventListener("click", ()=> {
+            //         resetActive();
+            //         td.classList.add("table-active");
+            //     });
+            // });
+
+            // function resetActive() {
+            //     activeTable.forEach(td => {
+            //         td.classList.remove("table-active");
+            //     });
+            // }
+            // // klik aktif table - end 
+
+            // format rupiah
+            function formatRupiah(angka, prefix) {
+                var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
             }
 
-            // klik aktif table - start
-            var activeTable = document.querySelectorAll('tbody tr');
-            activeTable.forEach(td => {
-                td.addEventListener("click", ()=> {
-                    resetActive();
-                    td.classList.add("table-active");
-                });
+            var transaksiBayar = document.getElementById('transaksiBayar');
+            transaksiBayar.addEventListener('keyup', function(e) {
+                transaksiBayar.value = formatRupiah(this.value, 'Rp. ');
             });
 
-            function resetActive() {
-                activeTable.forEach(td => {
-                    td.classList.remove("table-active");
-                });
-            }
-            // klik aktif table - end
-        });           
+            // insert data
+            $("#btnTambah").click(function() {
+                var data = $("#formTransaksi").serialize() + '&btnTambah=btnTambah';
+                $.ajax({
+                    url: "/ub-mart-tambun/App/Util/add-transaksi-temp.php",
+                    type: 'post',
+                    data: data
+                })
+            });
+        });
     </script>
 </body>

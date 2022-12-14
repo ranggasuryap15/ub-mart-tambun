@@ -81,7 +81,7 @@ class Barang extends Config {
 
     // Function for table data_barang
     public function createBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
-        $sql = "INSERT INTO data_barang ('kode_barang, 'nama_barang', 'harga_pokok', 'harga_jual', 'profit', 'stok', 'satuan', 'tanggal') VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
+        $sql = "INSERT INTO data_barang (kode_barang, nama_barang, harga_pokok, harga_jual, profit, stok, satuan, tanggal) VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
         $data = $this->config->prepare($sql);
         $data->bindParam('kode_barang', $kode_barang);
         $data->bindParam('nama_barang', $nama_barang);

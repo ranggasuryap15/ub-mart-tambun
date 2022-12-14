@@ -124,7 +124,6 @@ $barang = new Barang;
         $(document).ready(function() {
 
             // input search kode_barang
-            // var kodeBarang = $("#kodeBarangTransaksi").val();
             var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php"; // url json from mysql
 
             $.getJSON(url, function(data) {

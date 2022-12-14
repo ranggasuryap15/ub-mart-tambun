@@ -35,5 +35,4 @@ class LaporanPenjualan extends Config {
         $result = $stmt->fetchAll();
         return $result;
     }
-    
 }

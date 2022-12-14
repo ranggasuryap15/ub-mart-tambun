@@ -27,3 +27,4 @@ $data = $laporanPenjualan->readTransaksiTemp();
         <?php endforeach; ?>
     </tbody>
 </table>
+<script src="assets/js/transaksi.js"></script>

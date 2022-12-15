@@ -52,7 +52,7 @@ $barang = new Barang;
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="subTotalTransaksi" name="subTotalTransaksi">
                         </div>
-                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
+                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="button" value="Tambah" id="btnTambah" name="btnTambah">
                     </div>
                     <div class="mb-1 row">
                         <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
@@ -258,7 +258,14 @@ $barang = new Barang;
                 $.ajax({
                     url: "/ub-mart-tambun/App/Util/add-transaksi-temp.php",
                     type: 'post',
-                    data: data
+                    data: data,
+                    success: function() {
+                        $("#kodeBarangTransaksi").val("");
+                        $("#namaBarangTransaksi").val("");
+                        $("#hargaTransaksi").val("");
+                        $("#qtyTransaksi").val("");
+                        $("#subTotalTransaksi").val("");
+                    }
                 })
             });
         });

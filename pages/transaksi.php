@@ -219,7 +219,6 @@ $laporanPenjualan->readTransaksiTemp();
             }
 
             // klik aktif table - start
-
             $("#tableStruk tbody tr").on("click", function(){
                 
                 // remove table-active in this row
@@ -234,30 +233,6 @@ $laporanPenjualan->readTransaksiTemp();
                     $(this).addClass("table-active").siblings().removeClass("table-active");
                 }
             })
-
-            // var activeTable = document.querySelectorAll('#tableStruk tbody tr');
-            // activeTable.forEach(td => {
-            //     td.addEventListener("click", ()=> {
-                    
-            //         if ($("tr:has(.table-active)").hasClass("table-active") == true) {
-            //             resetActive();
-            //             $("#kodeBarangTransaksi").val("");
-            //             $("#namaBarangTransaksi").val("");
-            //             $("#hargaTransaksi").val("");
-            //             $("#qtyTransaksi").val("");
-            //             $("#subTotalTransaksi").val("");
-            //         } else {
-            //             resetActive();
-            //             td.classList.add("table-active");
-            //         }
-            //     });
-            // });
-
-            // function resetActive() {
-            //     activeTable.forEach(td => {
-            //         td.classList.remove("table-active");
-            //     });
-            // }
             // klik aktif table - end 
 
             // cursor tr pointer

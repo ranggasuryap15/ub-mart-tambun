@@ -94,7 +94,7 @@ $laporanPenjualan->readTransaksiTemp();
                         </tbody>
                     </table>
                     <!-- dinamis table -->
-                    <table class="table table-hover" id="tableStruk"    >
+                    <table class="table table-hover" id="tableStruk">
                         <thead>
                             <tr>
                                 <th scope="col-4" class="text-start">Kode Barang</th>
@@ -104,7 +104,7 @@ $laporanPenjualan->readTransaksiTemp();
                                 <th scope="col-3" class="text-end">Sub Total</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider" >
+                        <tbody class="table-group-divider" id="tBodyStruk">
                             <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp(); ?>
                             <?php foreach($laporanPenjualan as $row) : ?>
                                 <tr>
@@ -204,7 +204,7 @@ $laporanPenjualan->readTransaksiTemp();
             });
 
             // table data kirim ke form
-            var table = document.getElementById('tableStruk'), rIndex;
+            var table = document.getElementById('tBodyStruk'), rIndex;
 
             for (var i = 0; i < table.rows.length; i++) {
                 table.rows[i].onclick = function() {
@@ -221,8 +221,12 @@ $laporanPenjualan->readTransaksiTemp();
             var activeTable = document.querySelectorAll('#tableStruk tbody tr');
             activeTable.forEach(td => {
                 td.addEventListener("click", ()=> {
-                    resetActive();
-                    td.classList.add("table-active");
+                    if ($("tr").hasClass("table-active") == true) {
+                        resetActive();
+                    } else {
+                        resetActive();
+                        td.classList.add("table-active");
+                    }
                 });
             });
 

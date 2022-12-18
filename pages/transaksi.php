@@ -182,17 +182,17 @@ $laporanPenjualan->readTransaksiTemp();
                                         this.value = this.value.slice(0,4);
                                     }
                                 });
-                                // }
-                                // jika kode_barang tidak sesuai, maka langsung reset form
-                                $("#kodeBarangTransaksi").on('input', function() {
-                                    if (this.value != value.kode_barang) {
-                                        $("#namaBarangTransaksi").val("");
-                                        $("#hargaTransaksi").val("");
-                                        $("#qtyTransaksi").val("");
-                                        $("#subTotalTransaksi").val("");
-                                    }
-                                });
                             }
+                            
+                             // jika kode_barang tidak sesuai, maka langsung reset form
+                            $("#kodeBarangTransaksi").on('input', function() {
+                                if (this.value != value.kode_barang) {
+                                    $("#namaBarangTransaksi").val("");
+                                    $("#hargaTransaksi").val("");
+                                    $("#qtyTransaksi").val("");
+                                    $("#subTotalTransaksi").val("");
+                                }
+                            });
                         });
                     }, 1000);
                     

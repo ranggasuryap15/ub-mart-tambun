@@ -185,7 +185,7 @@ $laporanPenjualan->readTransaksiTemp();
                                 // }
                                 // jika kode_barang tidak sesuai, maka langsung reset form
                                 $("#kodeBarangTransaksi").on('input', function() {
-                                    if (this.value != (value.kode_barang.search(expression) != -1)) {
+                                    if (this.value != value.kode_barang) {
                                         $("#namaBarangTransaksi").val("");
                                         $("#hargaTransaksi").val("");
                                         $("#qtyTransaksi").val("");

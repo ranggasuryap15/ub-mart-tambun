@@ -1,10 +1,8 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
-require_once (__DIR__ . "/../App/Class/Barang.php");
-// require_once (__DIR__ . "/../App/Class/LaporanPenjualan.php");
-
-$barang = new Barang;
-// $laporanPenjualan = new LaporanPenjualan;
+require_once (__DIR__ . "/../App/Class/LaporanPenjualan.php");
+$laporanPenjualan = new LaporanPenjualan;
+$laporanPenjualan->readTransaksiTemp();
 ?>
 
 <head>
@@ -16,7 +14,7 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4">
                 <h3 class="align-items-center text-center border-bottom mb-3">Input Transaksi</h3>
-                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13">
+                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13" action="/ub-mart-tambun/App/Util/add-transaksi-temp.php">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
@@ -52,7 +50,7 @@ $barang = new Barang;
                         <div class="input-group">
                             <input type="text" readonly class="form-control" id="subTotalTransaksi" name="subTotalTransaksi">
                         </div>
-                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="button" value="Tambah" id="btnTambah" name="btnTambah">
+                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
                     </div>
                     <div class="mb-1 row">
                         <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
@@ -95,10 +93,31 @@ $barang = new Barang;
                             </tr>
                         </tbody>
                     </table>
+                    <!-- dinamis table -->
+                    <table class="table table-hover" id="tableStruk"    >
+                        <thead>
+                            <tr>
+                                <th scope="col-4" class="text-start">Kode Barang</th>
+                                <th scope="col-4" class="text-center">Nama Barang</th>
+                                <th scope="col-2" class="text-center">QTY</th>
+                                <th scope="col-3" class="text-center">Harga</th>
+                                <th scope="col-3" class="text-end">Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider" >
+                            <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp(); ?>
+                            <?php foreach($laporanPenjualan as $row) : ?>
+                                <tr>
 
-                    <div id="tableStruk">
-                        <!-- dinamis table -->
-                    </div>
+                                    <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
+                                    <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
+                                    <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
+                                    <td scope="col-3" class="text-center"><?php echo $row['harga_jual']; ?></td>
+                                    <td scope="col-3" class="text-end"><?php echo $row['sub_total']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                     
                     <table class="table table-group-divider">
                         <thead>
@@ -128,12 +147,12 @@ $barang = new Barang;
 
             $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
-                    $("#kodeBarangTransaksi").keypress(function(event) {
-                        var kodeBarang = this.value;
-                        var expression = new RegExp(kodeBarang, "i"); // searching live
-                        // jika field kodeBarangTransaksi ditekan enter maka akan muncul
-                        if(event.keyCode == 13 && event.target.value != "") {
-                            if (value.kode_barang.search(expression) != -1) {
+                    setInterval(function() {
+                        $("#kodeBarangTransaksi").on('input',function(event) {
+                            var kodeBarang = this.value;
+                            
+                            // jika field kodeBarangTransaksi ditekan enter maka akan muncul
+                            if(event.target.value != "" && kodeBarang == value.kode_barang ) {
                                 // output
                                 $("#namaBarangTransaksi").val(value.nama_barang);
                                 $("#hargaTransaksi").val(value.harga_jual);
@@ -163,72 +182,56 @@ $barang = new Barang;
                                         this.value = this.value.slice(0,4);
                                     }
                                 });
+                                // }
+                                // jika kode_barang tidak sesuai, maka langsung reset form
+                                $("#kodeBarangTransaksi").on('input', function() {
+                                    if (this.value != (value.kode_barang.search(expression) != -1)) {
+                                        $("#namaBarangTransaksi").val("");
+                                        $("#hargaTransaksi").val("");
+                                        $("#qtyTransaksi").val("");
+                                        $("#subTotalTransaksi").val("");
+                                    }
+                                });
                             }
-                            // jika kode_barang tidak sesuai, maka langsung reset form
-                            $("#kodeBarangTransaksi").on('input', function() {
-                                if (this.value != (value.kode_barang.search(expression) != -1)) {
-                                    $("#namaBarangTransaksi").val("");
-                                    $("#hargaTransaksi").val("");
-                                    $("#qtyTransaksi").val("");
-                                    $("#subTotalTransaksi").val("");
-                                }
-                            });
-                        }
-                    });
-
+                        });
+                    }, 1000);
                     
                 });
             });
-
+            
             $('#qtyTransaksi').on('keypress', function() {
                 limitText(this, 10)
             });
 
-            // table struk temp
-            setInterval(function() {
-                table();
-            }, 1000);
-            window.onload = table;
+            // table data kirim ke form
+            var table = document.getElementById('tableStruk'), rIndex;
 
-            function table() {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("tableStruk").innerHTML = this.responseText;
-                    } 
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function() {
+                    rIndex = this.rowIndex;
+                    document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
+                    document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
+                    document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
+                    document.getElementById("hargaTransaksi").value = this.cells[3].innerHTML;
+                    document.getElementById("subTotalTransaksi").value = parseInt(this.cells[4].innerHTML);
                 };
-                xhttp.open("GET", "/ub-mart-tambun/App/Util/load-table-struk-temp.php", true);
-                xhttp.send();
             }
 
-            // // table data kirim ke form
-            // var table = document.getElementById('tableStruk'), rIndex;
+            // klik aktif table - start
+            var activeTable = document.querySelectorAll('#tableStruk tbody tr');
+            activeTable.forEach(td => {
+                td.addEventListener("click", ()=> {
+                    resetActive();
+                    td.classList.add("table-active");
+                });
+            });
 
-            // for (var i = 0; i < table.rows.length; i++) {
-            //     table.rows[i].onclick = function() {
-            //         rIndex = this.rowIndex;
-            //         document.getElementById("namaBarangTransaksi").value = this.cells[0].innerHTML;
-            //         document.getElementById("qtyTransaksi").value = this.cells[1].innerHTML;
-            //         document.getElementById("hargaTransaksi").value = this.cells[2].innerHTML;
-            //         document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-            //     };
-            // }
-
-            // // klik aktif table - start
-            // var activeTable = document.querySelectorAll('tbody tr');
-            // activeTable.forEach(td => {
-            //     td.addEventListener("click", ()=> {
-            //         resetActive();
-            //         td.classList.add("table-active");
-            //     });
-            // });
-
-            // function resetActive() {
-            //     activeTable.forEach(td => {
-            //         td.classList.remove("table-active");
-            //     });
-            // }
-            // // klik aktif table - end 
+            function resetActive() {
+                activeTable.forEach(td => {
+                    td.classList.remove("table-active");
+                });
+            }
+            // klik aktif table - end 
 
             // format rupiah
             function formatRupiah(angka, prefix) {
@@ -246,28 +249,6 @@ $barang = new Barang;
                 rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
                 return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
             }
-
-            var transaksiBayar = document.getElementById('transaksiBayar');
-            transaksiBayar.addEventListener('keyup', function(e) {
-                transaksiBayar.value = formatRupiah(this.value, 'Rp. ');
-            });
-
-            // insert data
-            $("#btnTambah").click(function() {
-                var data = $("#formTransaksi").serialize() + '&btnTambah=btnTambah';
-                $.ajax({
-                    url: "/ub-mart-tambun/App/Util/add-transaksi-temp.php",
-                    type: 'post',
-                    data: data,
-                    success: function() {
-                        $("#kodeBarangTransaksi").val("");
-                        $("#namaBarangTransaksi").val("");
-                        $("#hargaTransaksi").val("");
-                        $("#qtyTransaksi").val("");
-                        $("#subTotalTransaksi").val("");
-                    }
-                })
-            });
         });
     </script>
 </body>

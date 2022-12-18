@@ -27,4 +27,20 @@ $data = $laporanPenjualan->readTransaksiTemp();
         <?php endforeach; ?>
     </tbody>
 </table>
-<script src="assets/js/transaksi.js"></script>
+<script>
+    // klik aktif table - start
+    var activeTable = document.querySelectorAll('tbody tr');
+    activeTable.forEach(td => {
+        td.addEventListener("click", ()=> {
+            resetActive();
+            td.classList.add("table-active");
+        });
+    });
+
+    function resetActive() {
+        activeTable.forEach(td => {
+            td.classList.remove("table-active");
+        });
+    }
+    // klik aktif table - end 
+</script>

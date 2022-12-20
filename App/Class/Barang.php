@@ -81,7 +81,7 @@ class Barang extends Config {
 
     // Function for table data_barang
     public function createBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
-        $sql = "INSERT INTO data_barang ('kode_barang, 'nama_barang', 'harga_pokok', 'harga_jual', 'profit', 'stok', 'satuan', 'tanggal') VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
+        $sql = "INSERT INTO data_barang (kode_barang, nama_barang, harga_pokok, harga_jual, profit, stok, satuan, tanggal) VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
         $data = $this->config->prepare($sql);
         $data->bindParam('kode_barang', $kode_barang);
         $data->bindParam('nama_barang', $nama_barang);
@@ -102,16 +102,6 @@ class Barang extends Config {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
-        return $result;
-    }
-
-    public function readBarangByKode($kode_barang) 
-    {
-        $sql = "SELECT * FROM kasir_ub_mart.data_barang WHERE kode_barang=:kode_barang";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam('kode_barang', $kode_barang);
-        $stmt->execute();
-        $result = $stmt->fetch();
         return $result;
     }
 

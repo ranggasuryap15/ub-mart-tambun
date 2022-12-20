@@ -80,7 +80,7 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <!-- <script src="assets/js/main.js"></script> -->
     <script src="assets/js/autocalc.js" crossorigin="anonymous"></script>
 </body>
 

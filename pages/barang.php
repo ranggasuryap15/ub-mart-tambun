@@ -17,7 +17,7 @@ $barang = new Barang;
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4 ">
                 <h3 class="text-center border-bottom mb-5">Input Barang</h3>
-                <form action="/ub-mart-tambun/App/Action.php" method="post">
+                <form action="/ub-mart-tambun/App/Util/update-barang.php" method="post">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Kode Barang</label>
                         <div class="input-group">
@@ -83,30 +83,29 @@ $barang = new Barang;
         var table = document.getElementById('table'), rIndex;
 
         for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function() {
-                rIndex = this.rowIndex;
-                document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
-                document.getElementById("namaBarang").value = this.cells[1].innerHTML;
-                document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
-                document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-            };
+        table.rows[i].onclick = function() {
+            rIndex = this.rowIndex;
+            document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
+            document.getElementById("namaBarang").value = this.cells[1].innerHTML;
+            document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
+            document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
+        };
         }
 
         // klik aktif table - start
         var activeTable = document.querySelectorAll('tbody tr');
         activeTable.forEach(td => {
-            td.addEventListener("click", ()=> {
-                resetActive();
-                td.classList.add("table-active");
-            });
+        td.addEventListener("click", ()=> {
+            resetActive();
+            td.classList.add("table-active");
+        });
         });
 
         function resetActive() {
-            activeTable.forEach(td => {
-                td.classList.remove("table-active");
-            });
+        activeTable.forEach(td => {
+            td.classList.remove("table-active");
+        });
         }
-        // klik aktif table - end
     </script>
 </body>
 

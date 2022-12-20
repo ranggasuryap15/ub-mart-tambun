@@ -1,7 +1,7 @@
 <?php
 
-require_once (__DIR__ . "/../App/Class/Barang.php");
-require_once (__DIR__ . "/../App/Util.php");
+require_once (__DIR__ . "/../Class/Barang.php");
+require_once (__DIR__ . "/../Util.php");
 $barang = new Barang;
 $util = new Util;
 
@@ -16,11 +16,11 @@ if (isset($_POST['updateButton'])) {
         $errorMessage = "Berhasil update stok";
 
         if (!isset($result)) {
-            header('location:../index.php?p=barang');
+            header('location:../../index.php?p=barang');
         }
     } else {
         $errorMessage = "Gagal update stok";
-        header('location:../index.php?p=barang');
+        header('location:../../index.php?p=barang');
     }   
 }
 ?>

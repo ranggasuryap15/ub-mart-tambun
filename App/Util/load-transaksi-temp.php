@@ -1,8 +1,8 @@
 <?php 
 
-require_once(__DIR__ . "/../Class/LaporanPenjualan.php");
+require_once(__DIR__ . "/../Class/Transaksi.php");
 
-$laporanPenjualan = new LaporanPenjualan;
+$laporanPenjualan = new Transaksi;
 
 $data = $laporanPenjualan->readTransaksiTemp();
 ?>

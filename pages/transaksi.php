@@ -1,7 +1,8 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
-require_once (__DIR__ . "/../App/Class/LaporanPenjualan.php");
-$laporanPenjualan = new LaporanPenjualan;
+require_once (__DIR__ . "/../App/Class/Transaksi.php");
+$laporanPenjualan = new Transaksi;
+$notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 ?>
 <head>
     <title>Transaksi</title>
@@ -51,6 +52,9 @@ $laporanPenjualan = new LaporanPenjualan;
                         <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
                         <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Update" id="btnUpdate" name="btnUpdate" style="display: none;">
                     </div>
+                </form>
+
+                <form action="/ub-mart-tambun/App/Util/add-nota-harian-temp.php" method="post">
                     <div class="mb-1 row">
                         <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
                         <div class="input-group">
@@ -60,11 +64,11 @@ $laporanPenjualan = new LaporanPenjualan;
                     <div class="mb-1 row">
                         <label for="transaksiKembalian" class="col-form-label fs-5">Kembalian</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="transaksiKembalian" readonly>
+                            <input type="text" class="form-control" id="transaksiKembalian" name="transaksiKembalian" readonly>
                         </div>
                     </div>
                     <div class="mb-1 row">
-                        <input class="btn btn-primary btn-lg rounded-pill my-4" type="button" value="Bayar">
+                        <input class="btn btn-primary btn-lg rounded-pill my-4" id="btnBayar" name="btnBayar" type="submit" value="Bayar">
                     </div>
                 </form>
             </div>
@@ -122,15 +126,15 @@ $laporanPenjualan = new LaporanPenjualan;
                         <thead>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Total</th>
-                                <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow">Rp. </td>
+                                <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow"></td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Bayar</th>
-                                <td class="align-items.center text-end" scope="col-6">Rp. 0</td>
+                                <td class="align-items.center text-end" scope="col-6"><?php echo $notaHarianTemp['bayar'] ?></td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Kembalian</td>
-                                <td class="align-items.center text-end" scope="col-6">Rp. 0</td>
+                                <td class="align-items.center text-end" scope="col-6"><?php echo $notaHarianTemp['kembalian'] ?></td>
                             </tr>
                         </thead>
                     </table>
@@ -147,7 +151,7 @@ $laporanPenjualan = new LaporanPenjualan;
             $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
                     setInterval(function() {
-                        $("#kodeBarangTransaksi").on('input',function(event) {
+                        $("#kodeBarangTransaksi").on('keypress',function(event) {
                             var kodeBarang = this.value;
                             
                             // jika field kodeBarangTransaksi ditekan enter maka akan muncul
@@ -262,7 +266,16 @@ $laporanPenjualan = new LaporanPenjualan;
                 sumSubTotal += Number(tdText);
             }
 
-            $("#totalFromSubTotalRow").text("Rp. " + sumSubTotal);
+            $("#totalFromSubTotalRow").text(sumSubTotal);
+
+            // function bayar kembalian dari total
+            var totalHargaBayar = $("#totalFromSubTotalRow").text();
+            
+            $("#transaksiBayar").on("input", function() {
+                // cetak kembalian
+                var kembalian = this.value - totalHargaBayar;
+                $("#transaksiKembalian").val(kembalian);
+            });
         });
     </script>
 </body>

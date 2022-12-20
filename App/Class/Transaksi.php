@@ -2,7 +2,7 @@
 
 include (__DIR__ . "/../Config/Config.php");
 
-class LaporanPenjualan extends Config {
+class Transaksi extends Config {
     // atribut
     private string $kode_barang = "";
     private int $kuantitas = 0;
@@ -27,12 +27,37 @@ class LaporanPenjualan extends Config {
         }
     }
 
+    public function insertNotaHarianTemp($nota, $tanggal, $bayar, $kembalian, $kasir) {
+        try {
+            $sql = "INSERT INTO kasir_ub_mart.nota_harian_temp (nota, tanggal, bayar, kembalian, kasir) VALUES (:nota, :tanggal, :bayar, :kembalian, :kasir)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam('nota', $nota);
+            $stmt->bindParam('tanggal', $tanggal);
+            $stmt->bindParam('bayar', $bayar);
+            $stmt->bindParam('kembalian', $kembalian);
+            $stmt->bindParam('kasir', $kasir);
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Tambah Nota Harian gagal. <br>" . $e->getMessage();
+        }
+    }
+
     // read transaksi temporary
     public function readTransaksiTemp() {
         $sql = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp ORDER BY id ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    // nota harian temp
+    public function readNotaHarianTemp() {
+        $sql = "SELECT * FROM kasir_ub_mart.nota_harian_temp";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch();
         return $result;
     }
 }

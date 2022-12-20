@@ -2,9 +2,7 @@
 date_default_timezone_set('Asia/Jakarta');
 require_once (__DIR__ . "/../App/Class/LaporanPenjualan.php");
 $laporanPenjualan = new LaporanPenjualan;
-$laporanPenjualan->readTransaksiTemp();
 ?>
-
 <head>
     <title>Transaksi</title>
 </head>
@@ -124,15 +122,15 @@ $laporanPenjualan->readTransaksiTemp();
                         <thead>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Total</th>
-                                <td class="align-items.center text-end" scope="col-6" id="test">Rp. 100.000</td>
+                                <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow">Rp. </td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Bayar</th>
-                                <td class="align-items.center text-end" scope="col-6">Rp. 102.000</td>
+                                <td class="align-items.center text-end" scope="col-6">Rp. 0</td>
                             </tr>
                             <tr>
                                 <th class="align-items.center text-start" scope="col-6">Kembalian</td>
-                                <td class="align-items.center text-end" scope="col-6">Rp. 2.000</td>
+                                <td class="align-items.center text-end" scope="col-6">Rp. 0</td>
                             </tr>
                         </thead>
                     </table>
@@ -254,6 +252,17 @@ $laporanPenjualan->readTransaksiTemp();
                 rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
                 return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
             }
+
+            // function for find the total of subTotal
+            var sumSubTotal = 0;
+            var trCount = $("#tableStruk tbody tr").length;
+
+            for (i = 0; i < trCount; i++) {
+                var tdText = $("#tableStruk tbody tr:eq(" + i + ") td:eq(4)").text();
+                sumSubTotal += Number(tdText);
+            }
+
+            $("#totalFromSubTotalRow").text("Rp. " + sumSubTotal);
         });
     </script>
 </body>

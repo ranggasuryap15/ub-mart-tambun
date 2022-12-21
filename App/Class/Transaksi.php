@@ -13,16 +13,33 @@ class Transaksi extends Config {
     // insert transaksi temporary
     public function insertTransaksiTemp($kode_barang, $nama_barang, $harga_jual, $kuantitas, $sub_total) {
         try {
-            $sql = "INSERT INTO kasir_ub_mart.transaksi_struk_temp (kode_barang, nama_barang, harga_jual, kuantitas, sub_total) VALUES (:kode_barang, :nama_barang, :harga_jual, :kuantitas, :sub_total)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam('kode_barang', $kode_barang);
-            $stmt->bindParam('nama_barang', $nama_barang);
-            $stmt->bindParam('harga_jual', $harga_jual);
-            $stmt->bindParam('kuantitas', $kuantitas);
-            $stmt->bindParam('sub_total', $sub_total);
+            $cekKodeBarang = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp WHERE kode_barang=$kode_barang";
+            $cek = $this->pdo->query($cekKodeBarang);
+            $rowCount = $cek->rowCount();
 
-            $stmt->execute();
+            if ($rowCount > 0) {
+                // update data jika kode barang ada yang sama
+                $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=kuantitas + :kuantitas WHERE kode_barang=:kode_barang";
+
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->bindParam('kuantitas', $kuantitas);
+                $stmt->bindParam('kode_barang', $kode_barang);
+                $stmt->execute();
+            } else {
+                $sql = "INSERT INTO kasir_ub_mart.transaksi_struk_temp (kode_barang, nama_barang, harga_jual, kuantitas, sub_total) VALUES (:kode_barang, :nama_barang, :harga_jual, :kuantitas, :sub_total)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->bindParam('kode_barang', $kode_barang);
+                $stmt->bindParam('nama_barang', $nama_barang);
+                $stmt->bindParam('harga_jual', $harga_jual);
+                $stmt->bindParam('kuantitas', $kuantitas);
+                $stmt->bindParam('sub_total', $sub_total);
+                $stmt->execute();
+            }
+
+
+            
         } catch (PDOException $e) {
+            // $sql = "UPDATE STOK ";
             echo "Tambah transaksi gagal. <br>" . $e->getMessage();
         }
     }

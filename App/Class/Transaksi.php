@@ -19,7 +19,7 @@ class Transaksi extends Config {
 
             if ($rowCount > 0) {
                 // update data jika kode barang ada yang sama
-                $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=kuantitas + :kuantitas WHERE kode_barang=:kode_barang";
+                $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=kuantitas + :kuantitas, sub_total=harga_jual * kuantitas WHERE kode_barang=:kode_barang";
 
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->bindParam('kuantitas', $kuantitas);

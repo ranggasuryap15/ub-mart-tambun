@@ -13,7 +13,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
         <section class="col-5">
             <div class="container text-bg-light rounded-5 p-4">
                 <h3 class="align-items-center text-center border-bottom mb-3">Input Transaksi</h3>
-                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13" action="/ub-mart-tambun/App/Util/add-transaksi-temp.php">
+                <form method="post" id="formTransaksi" onkeypress="return event.keyCode != 13" action="/ub-mart-tambun/App/Util/transaksi-temp.php">
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
@@ -166,7 +166,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                             var kodeBarang = this.value;
                             
                             // jika field kodeBarangTransaksi ditekan enter maka akan muncul
-                            if(event.target.value != "" && kodeBarang == value.kode_barang ) {
+                            if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
                                 // output
                                 $("#namaBarangTransaksi").val(value.nama_barang);
                                 $("#hargaTransaksi").val(value.harga_jual);
@@ -210,6 +210,9 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                     $("#btnTambah").show();
                                     $("#btnUpdate").hide();
                                     $("#btnDelete").hide();
+
+                                    // remove active row 
+                                    $("#tableStruk tbody tr").removeClass("table-active");
                                 }
                             });
                         });

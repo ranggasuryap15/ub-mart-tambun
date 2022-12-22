@@ -50,11 +50,16 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                             <input type="text" readonly class="form-control" id="subTotalTransaksi" name="subTotalTransaksi">
                         </div>
                         <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
-                        <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Update" id="btnUpdate" name="btnUpdate" style="display: none;">
+                        <div class="input-group" id="divUpdateDelete">
+                            <input class="btn btn-warning btn-lg rounded-pill my-4" type="submit" value="Update" id="btnUpdate" name="btnUpdate" style="display: none;"> 
+                            <input class="btn btn-danger btn-lg rounded-pill my-4" type="submit" value="Delete" id="btnDelete" name="btnDelete" style="display: none;">
+                        </div>
+                        
+                        
                     </div>
                 </form>
 
-                <form action="/ub-mart-tambun/App/Util/add-nota-harian-temp.php" method="post">
+                <!-- <form action="/ub-mart-tambun/App/Util/add-nota-harian-temp.php" method="post">
                     <div class="mb-1 row">
                         <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
                         <div class="input-group">
@@ -70,7 +75,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                     <div class="mb-1 row">
                         <input class="btn btn-primary btn-lg rounded-pill my-4" id="btnBayar" name="btnBayar" type="submit" value="Bayar">
                     </div>
-                </form>
+                </form> -->
             </div>
         </section>
 
@@ -97,47 +102,53 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                         </tbody>
                     </table>
                     <!-- dinamis table -->
-                    <table class="table table-hover" id="tableStruk">
-                        <thead>
-                            <tr>
-                                <th scope="col-4" class="text-start">Kode Barang</th>
-                                <th scope="col-4" class="text-center">Nama Barang</th>
-                                <th scope="col-2" class="text-center">QTY</th>
-                                <th scope="col-3" class="text-center">Harga</th>
-                                <th scope="col-3" class="text-end">Sub Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider" id="tBodyStruk">
-                            <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp(); ?>
-                            <?php foreach($laporanPenjualan as $row) : ?>
+                    <form action="" >
+                        <table class="table table-hover" id="tableStruk">
+                            <thead>
                                 <tr>
-
-                                    <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
-                                    <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
-                                    <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
-                                    <td scope="col-3" class="text-center"><?php echo $row['harga_jual']; ?></td>
-                                    <td scope="col-3" class="text-end"><?php echo $row['sub_total']; ?></td>
+                                    <th scope="col-4" class="text-start">Kode Barang</th>
+                                    <th scope="col-4" class="text-center">Nama Barang</th>
+                                    <th scope="col-2" class="text-center">QTY</th>
+                                    <th scope="col-3" class="text-center">Harga</th>
+                                    <th scope="col-3" class="text-end">Sub Total</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    
-                    <table class="table table-group-divider">
-                        <thead>
-                            <tr>
-                                <th class="align-items.center text-start" scope="col-6">Total</th>
-                                <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow"></td>
-                            </tr>
-                            <tr>
-                                <th class="align-items.center text-start" scope="col-6">Bayar</th>
-                                <td class="align-items.center text-end" scope="col-6"><?php echo $notaHarianTemp['bayar'] ?></td>
-                            </tr>
-                            <tr>
-                                <th class="align-items.center text-start" scope="col-6">Kembalian</td>
-                                <td class="align-items.center text-end" scope="col-6"><?php echo $notaHarianTemp['kembalian'] ?></td>
-                            </tr>
-                        </thead>
-                    </table>
+                            </thead>
+                            <tbody class="table-group-divider" id="tBodyStruk">
+                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp(); ?>
+                                <?php foreach($laporanPenjualan as $row) : ?>
+                                    <tr>
+
+                                        <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
+                                        <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
+                                        <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
+                                        <td scope="col-3" class="text-center"><?php echo $row['harga_jual']; ?></td>
+                                        <td scope="col-3" class="text-end"><?php echo $row['sub_total']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        
+                        <table class="table table-group-divider">
+                            <thead>
+                                <tr>
+                                    <th class="align-items.center text-start" scope="col-6">Total</th>
+                                    <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow"></td>
+                                </tr>
+                                <tr>
+                                    <th class="align-items.center text-start" scope="col-6">Bayar</th>
+                                    <td class="align-items.center text-end" scope="col-6"><input type="tel" id="transaksiBayar" name="transaksiBayar" required/></td>
+                                </tr>
+                                <tr>
+                                    <th class="align-items.center text-start" scope="col-6">Kembalian</td>
+                                    <td class="align-items.center text-end" scope="col-6"><input type="number"  id="transaksiKembalian" name="transaksiKembalian" readonly required></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td class="align-items.center text-end"><input class="btn btn-primary btn-lg rounded-pill my-4" id="btnSimpanTransaksi" name="btnSimpanTransaksi" type="submit" value="Simpan"></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
                 </div>
             </div>
         </section>
@@ -194,6 +205,11 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                     $("#hargaTransaksi").val("");
                                     $("#qtyTransaksi").val("");
                                     $("#subTotalTransaksi").val("");
+
+                                    // show hide button
+                                    $("#btnTambah").show();
+                                    $("#btnUpdate").hide();
+                                    $("#btnDelete").hide();
                                 }
                             });
                         });
@@ -231,8 +247,18 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                     $("#hargaTransaksi").val("");
                     $("#qtyTransaksi").val("");
                     $("#subTotalTransaksi").val("");
+
+                    // show hide button
+                    $("#btnTambah").show();
+                    $("#btnUpdate").hide();
+                    $("#btnDelete").hide();
                 } else {
                     $(this).addClass("table-active").siblings().removeClass("table-active");
+                    
+                    // show hide button
+                    $("#btnTambah").hide();
+                    $("#btnUpdate").show();
+                    $("#btnDelete").show();
                 }
             })
             // klik aktif table - end 

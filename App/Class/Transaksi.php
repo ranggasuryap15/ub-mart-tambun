@@ -20,7 +20,6 @@ class Transaksi extends Config {
             if ($rowCount > 0) {
                 // update data jika kode barang ada yang sama
                 $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=kuantitas + :kuantitas, sub_total=harga_jual * kuantitas WHERE kode_barang=:kode_barang";
-
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->bindParam('kuantitas', $kuantitas);
                 $stmt->bindParam('kode_barang', $kode_barang);
@@ -67,6 +66,24 @@ class Transaksi extends Config {
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
+    }
+
+    // UPDATE TRANSAKSI
+    public function updateTransaksiTemp($kode_barang, $harga_jual, $kuantitas) {
+        $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=:kuantitas, harga_jual=:harga_jual, sub_total=kuantitas * harga_jual WHERE kode_barang=:kode_barang";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kuantitas', $kuantitas);
+        $stmt->bindParam('harga_jual', $harga_jual);
+        $stmt->bindParam('kode_barang', $kode_barang);
+        $stmt->execute();
+    }
+
+    // DELETE TRANSAKSI BY KODE_BARANG
+    public function deleteTransaksiTemp($kode_barang) {
+        $sql = "DELETE FROM kasir_ub_mart.transaksi_struk_temp WHERE kode_barang=:kode_barang";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kode_barang', $kode_barang);
+        $stmt->execute();
     }
 
     // nota harian temp

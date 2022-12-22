@@ -168,31 +168,46 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                             // jika field kodeBarangTransaksi ditekan enter maka akan muncul
                             if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
                                 // output
-                                var hargaJual = formatRupiah(value.harga_jual, "Rp. ");
-                                console.log(formatRupiah(value.harga_jual, "Rp"));
-
                                 $("#namaBarangTransaksi").val(value.nama_barang);
-                                $("#hargaTransaksi").val();
+                                $("#hargaTransaksi").val(value.harga_jual);
+
+                                // set harga transaksi to rupiah format 
+                                var hargaBarang = $("#hargaTransaksi").val();
+                                hargaBarang = formatRupiah(hargaBarang, "Rp. ");
+                                $("#hargaTransaksi").val(hargaBarang);
                                 
                                 // set min max stok
                                 if (value.stok <= 0) {
                                     $("#qtyTransaksi").prop('min', 0);
                                     $("#qtyTransaksi").val("0");
-                                    $("#subTotalTransaksi").val("0");
+                                    $("#subTotalTransaksi").val("Rp. 0");
                                 } else {
                                     $("#qtyTransaksi").prop('min', 1);
                                     $("#qtyTransaksi").val("1");
                                     $("#subTotalTransaksi").val(value.harga_jual);
+
+                                    // set subtotal format rupiah
+                                    var subTotal = $("#subTotalTransaksi").val();
+                                    subTotal = formatRupiah(subTotal, "Rp. ");
+                                    $("#subTotalTransaksi").val(subTotal);
                                 }
 
                                 $("#qtyTransaksi").prop('max', value.stok);
 
                                 // merubah harga sesuai dengan jumlah barang
                                 $("#qtyTransaksi").on('input', function() {
+                                    // set harga transaksi to number
                                     var hargaTransaksi = $("#hargaTransaksi").val();
+                                    hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
+
                                     var qtyTransaksi = $("#qtyTransaksi").val();
                                     var subTotal = hargaTransaksi * qtyTransaksi;
                                     $("#subTotalTransaksi").val(subTotal);
+
+                                    // set sub total to format rupiah
+                                    var subTotalRupiah = $("#subTotalTransaksi").val();
+                                    subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
+                                    $("#subTotalTransaksi").val(subTotalRupiah);
 
                                     // max length
                                     if (this.value.length > 4) {

@@ -121,8 +121,8 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                         <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
                                         <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
                                         <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
-                                        <td scope="col-3" class="text-center"><?php echo $row['harga_jual']; ?></td>
-                                        <td scope="col-3" class="text-end"><?php echo $row['sub_total']; ?></td>
+                                        <td scope="col-3" class="text-center rupiah"><?php echo $row['harga_jual']; ?></td>
+                                        <td scope="col-3" class="text-end rupiah"><?php echo $row['sub_total']; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -140,7 +140,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                 </tr>
                                 <tr>
                                     <th class="align-items.center text-start" scope="col-6">Kembalian</td>
-                                    <td class="align-items.center text-end" scope="col-6"><input type="number"  id="transaksiKembalian" name="transaksiKembalian" readonly required></td>
+                                    <td class="align-items.center text-end" scope="col-6"><input type="tel"  id="transaksiKembalian" name="transaksiKembalian" readonly required></td>
                                 </tr>
                                 <tr>
                                     <th></th>
@@ -158,7 +158,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 
             // input search kode_barang
             var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php"; // url json from mysql
-
+            
             $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
                     setInterval(function() {
@@ -168,8 +168,11 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                             // jika field kodeBarangTransaksi ditekan enter maka akan muncul
                             if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
                                 // output
+                                var hargaJual = formatRupiah(value.harga_jual, "Rp. ");
+                                console.log(formatRupiah(value.harga_jual, "Rp"));
+
                                 $("#namaBarangTransaksi").val(value.nama_barang);
-                                $("#hargaTransaksi").val(value.harga_jual);
+                                $("#hargaTransaksi").val();
                                 
                                 // set min max stok
                                 if (value.stok <= 0) {
@@ -271,7 +274,9 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 
             // format rupiah
             function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                // var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                
+                var number_string = angka.replace(/[^,\d]/g, "").toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
                 rupiah = split[0].substr(0, sisa),
@@ -301,9 +306,28 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
             var totalHargaBayar = $("#totalFromSubTotalRow").text();
             
             $("#transaksiBayar").on("input", function() {
-                // cetak kembalian
-                var kembalian = this.value - totalHargaBayar;
-                $("#transaksiKembalian").val(kembalian);
+                // format rupiah in transaksi bayar
+                var bayarRupiah = $(this).val();
+                bayarRupiah = formatRupiah(bayarRupiah, "Rp. ");
+                $(this).val(bayarRupiah);
+
+                // set text to number
+                var transaksiBayar = $(this).val();
+                transaksiBayar = transaksiBayar.replace(/[^0-9]/g,'');
+                
+                // hitung kembalian
+                var kembalian = transaksiBayar - totalHargaBayar;
+
+                // minus on input
+                if (kembalian < 0 == true) {
+                    $("#transaksiKembalian").val(kembalian);
+                } else {
+                    // cetak transaksi kembalian
+                    $("#transaksiKembalian").val(kembalian);
+                    var kembalianRupiah = $("#transaksiKembalian").val();
+                    kembalianRupiah = formatRupiah(kembalianRupiah, "Rp. ");
+                    $("#transaksiKembalian").val(kembalianRupiah);
+                }
             });
         });
     </script>

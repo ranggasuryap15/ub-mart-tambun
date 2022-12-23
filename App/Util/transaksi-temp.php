@@ -11,10 +11,14 @@ $hargaBarang = $_POST['hargaTransaksi'];
 $kuantitas = $_POST['qtyTransaksi'];
 $subTotal = $_POST['subTotalTransaksi'];
 
+// set to number
+$hargaBarangNum = preg_replace('/[^0-9]/', '', $hargaBarang);
+$subTotalNum = preg_replace('/[^0-9]/', '', $subTotal);
+
 // update stok
 if (isset($_POST['btnTambah'])) {
     if (!empty($kodeBarang) && $kuantitas != 0) {
-        $result = $laporanPenjualan->insertTransaksiTemp($kodeBarang, $namaBarang, $hargaBarang, $kuantitas, $subTotal);
+        $result = $laporanPenjualan->insertTransaksiTemp($kodeBarang, $namaBarang, $hargaBarangNum, $kuantitas, $subTotalNum);
         $errorStatus = "success";
         $errorMessage = "Berhasil tambah transaksi";
 
@@ -27,7 +31,7 @@ if (isset($_POST['btnTambah'])) {
     }
 } else if (isset($_POST['btnUpdate'])) {
     if (!empty($kodeBarang) && $kuantitas != 0) {
-        $result = $laporanPenjualan->updateTransaksiTemp($kodeBarang, $hargaBarang, $kuantitas);
+        $result = $laporanPenjualan->updateTransaksiTemp($kodeBarang, $kuantitas);
         $errorStatus = "success";
         $errorMessage = "Berhasil update transaksi";
 

@@ -69,11 +69,10 @@ class Transaksi extends Config {
     }
 
     // UPDATE TRANSAKSI
-    public function updateTransaksiTemp($kode_barang, $harga_jual, $kuantitas) {
-        $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=:kuantitas, harga_jual=:harga_jual, sub_total=kuantitas * harga_jual WHERE kode_barang=:kode_barang";
+    public function updateTransaksiTemp($kode_barang, $kuantitas) {
+        $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=:kuantitas, sub_total=kuantitas * harga_jual WHERE kode_barang=:kode_barang";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam('kuantitas', $kuantitas);
-        $stmt->bindParam('harga_jual', $harga_jual);
         $stmt->bindParam('kode_barang', $kode_barang);
         $stmt->execute();
     }

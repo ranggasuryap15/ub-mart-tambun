@@ -1,11 +1,13 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 require_once (__DIR__ . "/../App/Class/Transaksi.php");
+require_once (__DIR__ . "/../App/Util.php");
 $laporanPenjualan = new Transaksi;
+$util = new Util;
 $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 ?>
 <head>
-    <title>Transaksi</title>
+    <title>Kasir | Transaksi</title>
 </head>
 
 <body class="text-bg-secondary">
@@ -121,8 +123,8 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                         <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
                                         <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
                                         <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
-                                        <td scope="col-3" class="text-center rupiah"><?php echo $row['harga_jual']; ?></td>
-                                        <td scope="col-3" class="text-end rupiah"><?php echo $row['sub_total']; ?></td>
+                                        <td scope="col-3" class="text-center rupiah"><?php echo $util->rupiah($row['harga_jual']); ?></td>
+                                        <td scope="col-3" class="text-end rupiah"><?php echo $util->rupiah($row['sub_total']); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -161,84 +163,130 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
             
             $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
-                    setInterval(function() {
-                        $("#kodeBarangTransaksi").on('keypress',function(event) {
-                            var kodeBarang = this.value;
+                    $("#kodeBarangTransaksi").on('input keypress',function(event) {
+                        var kodeBarang = this.value;
+                        
+                        // jika field kodeBarangTransaksi ditekan enter maka akan muncul
+                        if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
+                            // output
+                            $("#namaBarangTransaksi").val(value.nama_barang);
+                            $("#hargaTransaksi").val(value.harga_jual);
+
+                            // set harga transaksi to rupiah format 
+                            var hargaBarang = $("#hargaTransaksi").val();
+                            hargaBarang = formatRupiah(hargaBarang, "Rp. ");
+                            $("#hargaTransaksi").val(hargaBarang);
                             
-                            // jika field kodeBarangTransaksi ditekan enter maka akan muncul
-                            if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
-                                // output
-                                $("#namaBarangTransaksi").val(value.nama_barang);
-                                $("#hargaTransaksi").val(value.harga_jual);
+                            // set max match to value stok
+                            $("#qtyTransaksi").prop('max', value.stok);
 
-                                // set harga transaksi to rupiah format 
-                                var hargaBarang = $("#hargaTransaksi").val();
-                                hargaBarang = formatRupiah(hargaBarang, "Rp. ");
-                                $("#hargaTransaksi").val(hargaBarang);
-                                
-                                // set min max stok
-                                if (value.stok <= 0) {
-                                    $("#qtyTransaksi").prop('min', 0);
-                                    $("#qtyTransaksi").val("0");
-                                    $("#subTotalTransaksi").val("Rp. 0");
-                                } else {
-                                    $("#qtyTransaksi").prop('min', 1);
-                                    $("#qtyTransaksi").val("1");
-                                    $("#subTotalTransaksi").val(value.harga_jual);
+                            // set min max stok
+                            if (value.stok <= 0) {
+                                $("#qtyTransaksi").prop('min', 0);
+                                $("#qtyTransaksi").val("0");
+                                $("#subTotalTransaksi").val("Rp. 0");
+                            } else {
+                                $("#qtyTransaksi").prop('min', 1);
+                                $("#qtyTransaksi").val("1");
+                                $("#subTotalTransaksi").val(value.harga_jual);
 
-                                    // set subtotal format rupiah
-                                    var subTotal = $("#subTotalTransaksi").val();
-                                    subTotal = formatRupiah(subTotal, "Rp. ");
-                                    $("#subTotalTransaksi").val(subTotal);
-                                }
-
-                                $("#qtyTransaksi").prop('max', value.stok);
-
-                                // merubah harga sesuai dengan jumlah barang
-                                $("#qtyTransaksi").on('input', function() {
-                                    // set harga transaksi to number
-                                    var hargaTransaksi = $("#hargaTransaksi").val();
-                                    hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
-
-                                    var qtyTransaksi = $("#qtyTransaksi").val();
-                                    var subTotal = hargaTransaksi * qtyTransaksi;
-                                    $("#subTotalTransaksi").val(subTotal);
-
-                                    // set sub total to format rupiah
-                                    var subTotalRupiah = $("#subTotalTransaksi").val();
-                                    subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
-                                    $("#subTotalTransaksi").val(subTotalRupiah);
-
-                                    // max length
-                                    if (this.value.length > 4) {
-                                        this.value = this.value.slice(0,4);
-                                    }
-                                });
+                                // set subtotal format rupiah
+                                var subTotal = $("#subTotalTransaksi").val();
+                                subTotal = formatRupiah(subTotal, "Rp. ");
+                                $("#subTotalTransaksi").val(subTotal);
                             }
-                            
-                             // jika kode_barang tidak sesuai, maka langsung reset form
-                            $("#kodeBarangTransaksi").on('input', function() {
-                                if (this.value != value.kode_barang) {
-                                    $("#namaBarangTransaksi").val("");
-                                    $("#hargaTransaksi").val("");
-                                    $("#qtyTransaksi").val("");
-                                    $("#subTotalTransaksi").val("");
 
-                                    // show hide button
-                                    $("#btnTambah").show();
-                                    $("#btnUpdate").hide();
-                                    $("#btnDelete").hide();
+                            // merubah harga sesuai dengan jumlah barang
+                            $("#qtyTransaksi").on('input', function() {
+                                // set harga transaksi to number
+                                var hargaTransaksi = $("#hargaTransaksi").val();
+                                hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
 
-                                    // remove active row 
-                                    $("#tableStruk tbody tr").removeClass("table-active");
+                                var qtyTransaksi = $("#qtyTransaksi").val();
+                                var subTotal = hargaTransaksi * qtyTransaksi;
+                                $("#subTotalTransaksi").val(subTotal);
+
+                                // set sub total to format rupiah
+                                var subTotalRupiah = $("#subTotalTransaksi").val();
+                                subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
+                                $("#subTotalTransaksi").val(subTotalRupiah);
+
+                                // max length
+                                if (this.value.length > 4) {
+                                    this.value = this.value.slice(0,4);
                                 }
                             });
-                        });
-                    }, 1000);
+                        }
+                    });
                     
+                    // jika kode_barang tidak sesuai, maka langsung reset form
+                    $("#kodeBarangTransaksi").on('input', function() {
+                        if (this.value != value.kode_barang) {
+                            // reset form
+                            $("#namaBarangTransaksi").val("");
+                            $("#hargaTransaksi").val("");
+                            $("#qtyTransaksi").val("");
+                            $("#subTotalTransaksi").val("");
+
+                            // show hide button
+                            $("#btnTambah").show();
+                            $("#btnUpdate").hide();
+                            $("#btnDelete").hide();
+
+                            // remove active row 
+                            $("#tableStruk tbody tr").removeClass("table-active");
+                        }
+                    });
                 });
             });
             
+            // klik aktif table - start
+            $("#tableStruk tbody tr").on("click", function(){
+                // remove table-active in this row
+                if ($(this).hasClass('table-active') == true) {
+                    $(this).removeClass('table-active');
+
+                    // show hide button
+                    $("#btnTambah").show();
+                    $("#btnUpdate").hide();
+                    $("#btnDelete").hide();
+
+                    // reset form
+                    $("#namaBarangTransaksi").val("");
+                    $("#hargaTransaksi").val("");
+                    $("#qtyTransaksi").val("");
+                    $("#subTotalTransaksi").val("");
+                } else {
+                    // add table active
+                    $(this).addClass("table-active").siblings().removeClass("table-active");
+                    
+                    // show hide button
+                    $("#btnTambah").hide();
+                    $("#btnUpdate").show();
+                    $("#btnDelete").show();
+
+                    // set min to 1
+                    $("#qtyTransaksi").prop('min', 1);
+                    // $("#qtyTransaksi").prop('max', value.stok);
+
+                    $("#qtyTransaksi").on('input', function() {
+                        // set harga transaksi to number
+                        var hargaTransaksi = $("#hargaTransaksi").val();
+                        hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
+
+                        var qtyTransaksi = $("#qtyTransaksi").val();
+                        var subTotal = hargaTransaksi * qtyTransaksi;
+                        $("#subTotalTransaksi").val(subTotal);
+
+                        // set sub total to format rupiah
+                        var subTotalRupiah = $("#subTotalTransaksi").val();
+                        subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
+                        $("#subTotalTransaksi").val(subTotalRupiah);
+                    });
+                }
+            })
+            // klik aktif table - end 
+
             $('#qtyTransaksi').on('keypress', function() {
                 limitText(this, 10)
             });
@@ -252,37 +300,10 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                     document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
                     document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
                     document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
-                    document.getElementById("hargaTransaksi").value = this.cells[3].innerHTML;
-                    document.getElementById("subTotalTransaksi").value = parseInt(this.cells[4].innerHTML);
+                    document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML, "Rp. ");
+                    document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML, "Rp. ");
                 };
             }
-
-            // klik aktif table - start
-            $("#tableStruk tbody tr").on("click", function(){
-                
-                // remove table-active in this row
-                if ($(this).hasClass('table-active') == true) {
-                    $(this).removeClass('table-active');
-                    $("#kodeBarangTransaksi").val("");
-                    $("#namaBarangTransaksi").val("");
-                    $("#hargaTransaksi").val("");
-                    $("#qtyTransaksi").val("");
-                    $("#subTotalTransaksi").val("");
-
-                    // show hide button
-                    $("#btnTambah").show();
-                    $("#btnUpdate").hide();
-                    $("#btnDelete").hide();
-                } else {
-                    $(this).addClass("table-active").siblings().removeClass("table-active");
-                    
-                    // show hide button
-                    $("#btnTambah").hide();
-                    $("#btnUpdate").show();
-                    $("#btnDelete").show();
-                }
-            })
-            // klik aktif table - end 
 
             // cursor tr pointer
             $("#tableStruk tbody tr").css('cursor', 'pointer');
@@ -311,14 +332,23 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
             var trCount = $("#tableStruk tbody tr").length;
 
             for (i = 0; i < trCount; i++) {
+
                 var tdText = $("#tableStruk tbody tr:eq(" + i + ") td:eq(4)").text();
+                // set text to number
+                tdText = tdText.replace(/[^0-9]/g,'');
                 sumSubTotal += Number(tdText);
             }
 
+            // set to number 
             $("#totalFromSubTotalRow").text(sumSubTotal);
+            var total = $("#totalFromSubTotalRow").text();
+            var output = (total/1000).toFixed(3);
+            $("#totalFromSubTotalRow").text("Rp. " + output);
+            
 
             // function bayar kembalian dari total
             var totalHargaBayar = $("#totalFromSubTotalRow").text();
+            totalHargaBayar = totalHargaBayar.replace(/[^0-9]/g,'');
             
             $("#transaksiBayar").on("input", function() {
                 // format rupiah in transaksi bayar
@@ -334,7 +364,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                 var kembalian = transaksiBayar - totalHargaBayar;
 
                 // minus on input
-                if (kembalian < 0 == true) {
+                if (kembalian < 0) {
                     $("#transaksiKembalian").val(kembalian);
                 } else {
                     // cetak transaksi kembalian

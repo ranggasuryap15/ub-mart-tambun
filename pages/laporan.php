@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location:pages/login.php");
+}
+
 require_once (__DIR__ . "/../App/Class/Transaksi.php");
 require_once (__DIR__ . "/../App/Util.php");
 $transaksi = new Transaksi;

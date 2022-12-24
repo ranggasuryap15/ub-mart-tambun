@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location:pages/login.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +47,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="">Keluar</a>
+                        <a class="nav-link" href="/ub-mart-tambun/App/Util/logout.php">Keluar</a>
                     </li>
                 </ul>
             </div>

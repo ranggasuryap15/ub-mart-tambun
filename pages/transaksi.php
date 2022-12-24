@@ -5,7 +5,6 @@ if (!isset($_SESSION['username'])) {
     header("location:pages/login.php");
 }
 
-
 date_default_timezone_set('Asia/Jakarta');
 require_once (__DIR__ . "/../App/Class/Transaksi.php");
 require_once (__DIR__ . "/../App/Util.php");
@@ -111,8 +110,8 @@ endforeach;
                                     <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
                                 </tr>
                                 <tr>
-                                    <input type="text" name="usernameKasir" value="<?= "shafara354" ?>" hidden> <!-- to get kasir username -->
-                                    <th class="align-items-center text-start" scope="col-6">KASIR: ADMIN</th>
+                                    <input type="text" name="usernameKasir" value="<?= $_SESSION['username']; ?>" hidden> <!-- to get kasir username -->
+                                    <th class="align-items-center text-start" scope="col-6">KASIR: <?= $_SESSION['nama_kasir']; ?></th>
                                     <input type="text" name="jamInput" value="<?php echo $timestamp = date('H:i')?>" hidden> <!-- to get value jam -->
                                     <th class="align-items-center text-end" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i')?></span></th>
                                 </tr>
@@ -131,7 +130,7 @@ endforeach;
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider" id="tBodyStruk">
-                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp(); ?>
+                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp();?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
                                     <tr>
 

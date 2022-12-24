@@ -14,5 +14,4 @@ foreach ($barang as $row) {
     'stok' => $row['stok']));
 }
 
-// echo json_encode(array('data_barang' => $result));
 echo json_encode($result);

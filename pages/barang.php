@@ -50,7 +50,7 @@ $barang = new Barang;
             <div class="container text-bg-light rounded-5 p-3">
                 <h3 class="text-center border-bottom mb-5">Data Barang</h3>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="tableBarang">
                         <thead>
                             <tr>
                                 <th scope="col-2" class="text-center">Kode Barang</th>
@@ -59,7 +59,7 @@ $barang = new Barang;
                                 <th scope="col-1" class="text-center">Stok Barang</th>
                             </tr>
                         </thead>
-                        <tbody id="table">
+                        <tbody id="tBodyBarang">
                             <?php 
                                 $allBarang = $barang->readBarang();
 
@@ -79,33 +79,47 @@ $barang = new Barang;
         </section>
     </div>
     <script>
-        // kirim data dari tabel ke form ketika di klik
-        var table = document.getElementById('table'), rIndex;
+        $(document).ready(function() {
+            // klik aktif table - start
+            $("#tableBarang tbody tr").on("click", function() {
+                // remove table-active in this row
+                if ($(this).hasClass('table-active') == true) {
+                    $(this).removeClass('table-active');
 
-        for (var i = 0; i < table.rows.length; i++) {
-        table.rows[i].onclick = function() {
-            rIndex = this.rowIndex;
-            document.getElementById("kodeBarang").value = this.cells[0].innerHTML;
-            document.getElementById("namaBarang").value = this.cells[1].innerHTML;
-            document.getElementById("hargaBarang").value = this.cells[2].innerHTML;
-            document.getElementById("stokBarang").value = parseInt(this.cells[3].innerHTML);
-        };
-        }
+                    // reset form 
+                    $("#kodeBarang").val("");
+                    $("#namaBarang").val("");
+                    $("#hargaBarang").val("");
+                    $("#stokBarang").val("");
+                } else {
+                    // add table active
+                    $(this).addClass("table-active").siblings().removeClass("table-active");
 
-        // klik aktif table - start
-        var activeTable = document.querySelectorAll('tbody tr');
-        activeTable.forEach(td => {
-        td.addEventListener("click", ()=> {
-            resetActive();
-            td.classList.add("table-active");
-        });
+                    // kirim data dari tabel ke form ketika di klik
+                    // get current row
+                    var currentRow = $(this).closest('tr');
+
+                    var kodeBarang = currentRow.find('td:eq(0)').text(); 
+                    var namaBarang = currentRow.find('td:eq(1)').text();
+                    var hargaBarang = currentRow.find('td:eq(2)').text();
+                    var stokBarang = parseInt(currentRow.find('td:eq(3)').text());
+
+                    // set form 
+                    $("#kodeBarang").val(kodeBarang);
+                    $("#namaBarang").val(namaBarang);
+                    $("#hargaBarang").val(hargaBarang);
+                    $("#stokBarang").val(stokBarang);
+                }
+            })
+            // klik aktif table - end 
+
+            // cursor tr pointer
+            $("#tableBarang tbody tr").css('cursor', 'pointer');
+
+            
         });
 
-        function resetActive() {
-        activeTable.forEach(td => {
-            td.classList.remove("table-active");
-        });
-        }
+        
     </script>
 </body>
 

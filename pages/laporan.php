@@ -1,14 +1,50 @@
+<?php
+require_once (__DIR__ . "/../App/Class/Transaksi.php");
+$transaksi = new Transaksi;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>Home</title>
-</head>
+    <head>
+        <title>Kasir | Laporan Penjualan</title>
+    </head>
 
-<body>
-    <div class="container">
-        <p>Ini adalah Laporan Page</p>
-    </div>
-</body>
-
+    <body class="text-bg-secondary">
+        <section class="col-10">
+            <div class="container text-bg-light rounded-5 p-3">
+                <h3 class="text-center border-bottom mb-5">Data Laporan Penjualan</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col-1" class="text-center">Nota</th>
+                                <th scope="col-2" class="text-center">Kode Barang</th>
+                                <th scope="col-3" class="text-center">Nama Barang</th>
+                                <th scope="col-2" class="text-center">Harga Barang</th>
+                                <th scope="col-2" class="text-center">Kuantitas</th>
+                                <th scope="col-2" class="text-center">Sub Total</th>
+                                <th scope="col-2" class="text-center">Kasir</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                            <?php $laporanPenjualan = $transaksi->readLaporanPenjualan(); ?>
+                                <?php foreach($laporanPenjualan as $row) : ?>
+                                    <tr>
+                                        <td scope='col-2' class='text-center'><?php echo $row['nota']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['kode_barang']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['nama_barang']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['harga_jual']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['kuantitas']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['sub_total']; ?></td>
+                                        <td scope='col-2' class='text-center'><?php echo $row['kasir']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>

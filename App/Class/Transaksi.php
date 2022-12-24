@@ -34,34 +34,24 @@ class Transaksi extends Config {
                 $stmt->bindParam('sub_total', $sub_total);
                 $stmt->execute();
             }
-
-
-            
         } catch (PDOException $e) {
             // $sql = "UPDATE STOK ";
             echo "Tambah transaksi gagal. <br>" . $e->getMessage();
         }
     }
 
-    public function insertNotaHarianTemp($nota, $tanggal, $bayar, $kembalian, $kasir) {
-        try {
-            $sql = "INSERT INTO kasir_ub_mart.nota_harian_temp (nota, tanggal, bayar, kembalian, kasir) VALUES (:nota, :tanggal, :bayar, :kembalian, :kasir)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam('nota', $nota);
-            $stmt->bindParam('tanggal', $tanggal);
-            $stmt->bindParam('bayar', $bayar);
-            $stmt->bindParam('kembalian', $kembalian);
-            $stmt->bindParam('kasir', $kasir);
-
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Tambah Nota Harian gagal. <br>" . $e->getMessage();
-        }
-    }
-
     // read transaksi temporary
     public function readTransaksiTemp() {
         $sql = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp ORDER BY id ASC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    // read laporan penjualan
+    public function readLaporanPenjualan() {
+        $sql = "SELECT nota.nota, lp.kode_barang, db.nama_barang, db.harga_jual, lp.kuantitas, lp.sub_total, nota.kasir FROM kasir_ub_mart.nota_harian nota INNER JOIN kasir_ub_mart.laporan_penjualan lp ON nota.nota = lp.nota INNER JOIN kasir_ub_mart.data_barang db ON lp.kode_barang = db.kode_barang";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -83,14 +73,5 @@ class Transaksi extends Config {
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam('kode_barang', $kode_barang);
         $stmt->execute();
-    }
-
-    // nota harian temp
-    public function readNotaHarianTemp() {
-        $sql = "SELECT * FROM kasir_ub_mart.nota_harian_temp";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch();
-        return $result;
     }
 }

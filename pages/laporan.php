@@ -36,7 +36,7 @@ $util = new Util;
                                 </tr>
                             </thead>
                             <tbody id="table">
-                                <?php $laporanPenjualan = $transaksi->readLaporanPenjualan(); ?>
+                                <?php $laporanPenjualan = $transaksi->readLaporanPenjualan($_SESSION['username']); ?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
                                     <tr>
                                         <td scope='col' class='col-1 text-center'><?php echo $row['nota']; ?></td>

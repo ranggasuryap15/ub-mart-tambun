@@ -52,9 +52,10 @@ class Transaksi extends Config {
     }
 
     // read laporan penjualan
-    public function readLaporanPenjualan() {
-        $sql = "SELECT nota.nota, lp.kode_barang, db.nama_barang, db.harga_jual, lp.kuantitas, lp.sub_total, nota.kasir FROM kasir_ub_mart.nota_harian nota INNER JOIN kasir_ub_mart.laporan_penjualan lp ON nota.nota = lp.nota INNER JOIN kasir_ub_mart.data_barang db ON lp.kode_barang = db.kode_barang";
+    public function readLaporanPenjualan($kasir) {
+        $sql = "SELECT nota.nota, lp.kode_barang, db.nama_barang, db.harga_jual, lp.kuantitas, lp.sub_total, nota.kasir FROM kasir_ub_mart.nota_harian nota INNER JOIN kasir_ub_mart.laporan_penjualan lp ON nota.nota = lp.nota INNER JOIN kasir_ub_mart.data_barang db ON lp.kode_barang = db.kode_barang WHERE nota.kasir=:kasir";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kasir', $kasir);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;

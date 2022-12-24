@@ -225,7 +225,24 @@ $util = new Util;
                 } else {
                     // add table active
                     $(this).addClass("table-active").siblings().removeClass("table-active");
+
+                    // get current row
+                    var currentRow = $(this).closest('tr');
+
+                    // get data from table row 
+                    var kodeBarang = currentRow.find('td:eq(0)').text(); 
+                    var namaBarang = currentRow.find('td:eq(1)').text();
+                    var qtyTransaksi = currentRow.find('td:eq(2)').text();
+                    var hargaJual = parseInt(currentRow.find('td:eq(3)').text().replace(/[^0-9]/g,''));
+                    var subTotal = parseInt(currentRow.find('td:eq(4)').text().replace(/[^0-9]/g,''));
                     
+                    // set form
+                    $("#kodeBarangTransaksi").val(kodeBarang);
+                    $("#namaBarangTransaksi").val(namaBarang);
+                    $("#hargaTransaksi").val(formatRupiah(hargaJual));
+                    $("#qtyTransaksi").val(qtyTransaksi);
+                    $("#subTotalTransaksi").val(formatRupiah(subTotal));
+
                     // show hide button
                     $("#btnTambah").hide();
                     $("#btnUpdate").show();
@@ -253,18 +270,18 @@ $util = new Util;
             });
 
             // table data kirim ke form
-            var table = document.getElementById('tBodyStruk'), rIndex;
+            // var table = document.getElementById('tBodyStruk'), rIndex;
 
-            for (var i = 0; i < table.rows.length; i++) {
-                table.rows[i].onclick = function() {
-                    rIndex = this.rowIndex;
-                    document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
-                    document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
-                    document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
-                    document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML.replace(/[^0-9]/g,''));
-                    document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML.replace(/[^0-9]/g,''));
-                };
-            }
+            // for (var i = 0; i < table.rows.length; i++) {
+            //     table.rows[i].onclick = function() {
+            //         rIndex = this.rowIndex;
+            //         document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
+            //         document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
+            //         document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
+            //         document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML.replace(/[^0-9]/g,''));
+            //         document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML.replace(/[^0-9]/g,''));
+            //     };
+            // }
 
             // cursor tr pointer
             $("#tableStruk tbody tr").css('cursor', 'pointer');

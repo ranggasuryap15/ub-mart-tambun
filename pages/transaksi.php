@@ -130,7 +130,7 @@ endforeach;
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider" id="tBodyStruk">
-                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp();?>
+                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp($_SESSION['username']);?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
                                     <tr>
 

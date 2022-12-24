@@ -11,7 +11,7 @@ class Transaksi extends Config {
     private string $nota = "";
 
     // insert transaksi temporary
-    public function insertTransaksiTemp($kode_barang, $nama_barang, $harga_jual, $kuantitas, $sub_total) {
+    public function insertTransaksiTemp($kode_barang, $nama_barang, $harga_jual, $kuantitas, $sub_total, $kasir) {
         try {
             $cekKodeBarang = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp WHERE kode_barang=$kode_barang";
             $cek = $this->pdo->query($cekKodeBarang);
@@ -25,13 +25,14 @@ class Transaksi extends Config {
                 $stmt->bindParam('kode_barang', $kode_barang);
                 $stmt->execute();
             } else {
-                $sql = "INSERT INTO kasir_ub_mart.transaksi_struk_temp (kode_barang, nama_barang, harga_jual, kuantitas, sub_total) VALUES (:kode_barang, :nama_barang, :harga_jual, :kuantitas, :sub_total)";
+                $sql = "INSERT INTO kasir_ub_mart.transaksi_struk_temp (kode_barang, nama_barang, harga_jual, kuantitas, sub_total, kasir) VALUES (:kode_barang, :nama_barang, :harga_jual, :kuantitas, :sub_total, :kasir)";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->bindParam('kode_barang', $kode_barang);
                 $stmt->bindParam('nama_barang', $nama_barang);
                 $stmt->bindParam('harga_jual', $harga_jual);
                 $stmt->bindParam('kuantitas', $kuantitas);
                 $stmt->bindParam('sub_total', $sub_total);
+                $stmt->bindParam('kasir', $kasir);
                 $stmt->execute();
             }
         } catch (PDOException $e) {
@@ -41,9 +42,10 @@ class Transaksi extends Config {
     }
 
     // read transaksi temporary
-    public function readTransaksiTemp() {
-        $sql = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp ORDER BY id ASC";
+    public function readTransaksiTemp($kasir) {
+        $sql = "SELECT * FROM kasir_ub_mart.transaksi_struk_temp WHERE kasir=:kasir ORDER BY id ASC";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kasir', $kasir);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;

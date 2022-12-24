@@ -10,6 +10,31 @@ class Transaksi extends Config {
     private string $kasir = "";
     private string $nota = "";
 
+    // insert transaksi to laporan penjualan
+    public function insertLaporanPenjualan($kodeBarang, $kuantitas, $sub_total, $kasir, $nota) {
+        $sql = "INSERT INTO kasir_ub_mart.laporan_penjualan (kode_barang, kuantitas, sub_total, kasir, nota) VALUES (:kode_barang, :kuantitas, :sub_total, :kasir, :nota)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('kode_barang', $kodeBarang);
+        $stmt->bindParam('kuantitas', $kuantitas);
+        $stmt->bindParam('sub_total', $sub_total);
+        $stmt->bindParam('kasir', $kasir);
+        $stmt->bindParam('nota', $nota);
+        $stmt->execute();
+    }
+
+    // insert nota
+    public function insertNotaHarian($nota, $tanggal, $bayar, $kembalian, $kasir) {
+        $sql = "INSERT INTO kasir_ub_mart.nota_harian (nota, tanggal, bayar, kembalian, kasir) VALUES (:nota, :tanggal, :bayar, :kembalian, :kasir)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('nota', $nota);
+        $stmt->bindParam('tanggal', $tanggal);
+        $stmt->bindParam('bayar', $bayar);
+        $stmt->bindParam('kembalian', $kembalian);
+        $stmt->bindParam('kasir', $kasir);
+        $stmt->execute();
+    }
+
+
     // insert transaksi temporary
     public function insertTransaksiTemp($kode_barang, $nama_barang, $harga_jual, $kuantitas, $sub_total, $kasir) {
         try {

@@ -39,7 +39,7 @@ $util = new Util;
                                 <?php $laporanPenjualan = $transaksi->readLaporanPenjualan($_SESSION['username']); ?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
                                     <tr>
-                                        <td scope='col' class='col-1 text-center'><?php echo $row['nota']; ?></td>
+                                        <td scope='col' class='col-2 text-center'><?php echo $row['nota']; ?></td>
                                         <td scope='col' class='col-2 text-center'><?php echo $row['kode_barang']; ?></td>
                                         <td scope='col' class='col-2 text-center'><?php echo $row['nama_barang']; ?></td>
                                         <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['harga_jual']); ?></td>

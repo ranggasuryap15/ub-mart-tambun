@@ -95,7 +95,7 @@ endforeach;
         </section>
 
         <section class="col-6">
-            <form action="" >
+            <form action="/ub-mart-tambun/App/Util/simpan-transaksi.php" method="post">
                 <div class="container text-bg-light rounded-5 p-3">
                     <h3 class="text-center border-bottom">UB Mart</h3>
                     <p class="text-center lh-1">Kampung Kobak, RW 2, Desa Mekarsari</p>
@@ -106,7 +106,7 @@ endforeach;
                                 <tr>
                                     <input type="text" name="notaTransaksi" value="<?= $nota; ?>" hidden> 
                                     <th class="align-items-center text-start" scope="col-6">NOTA: <?php echo $nota; ?></th>
-                                    <input type="text" name="tanggalInput" value="<?= date('d-m-Y') ?>" hidden> 
+                                    <input type="text" name="tanggalInput" value="<?= date('Y-m-d') ?>" hidden> 
                                     <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
                                 </tr>
                                 <tr>
@@ -133,7 +133,6 @@ endforeach;
                                 <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp($_SESSION['username']);?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
                                     <tr>
-
                                         <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
                                         <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
                                         <td scope="col-2" class="text-center"><?php echo $row['kuantitas']; ?></td>
@@ -298,20 +297,6 @@ endforeach;
             $('#qtyTransaksi').on('keypress', function() {
                 limitText(this, 10)
             });
-
-            // table data kirim ke form
-            // var table = document.getElementById('tBodyStruk'), rIndex;
-
-            // for (var i = 0; i < table.rows.length; i++) {
-            //     table.rows[i].onclick = function() {
-            //         rIndex = this.rowIndex;
-            //         document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
-            //         document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
-            //         document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
-            //         document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML.replace(/[^0-9]/g,''));
-            //         document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML.replace(/[^0-9]/g,''));
-            //     };
-            // }
 
             // cursor tr pointer
             $("#tableStruk tbody tr").css('cursor', 'pointer');

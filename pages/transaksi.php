@@ -4,7 +4,6 @@ require_once (__DIR__ . "/../App/Class/Transaksi.php");
 require_once (__DIR__ . "/../App/Util.php");
 $laporanPenjualan = new Transaksi;
 $util = new Util;
-$notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 ?>
 <head>
     <title>Kasir | Transaksi</title>
@@ -53,31 +52,11 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                         </div>
                         <input class="btn btn-primary btn-lg rounded-pill my-4 btnTambah" type="submit" value="Tambah" id="btnTambah" name="btnTambah">
                         <div class="input-group" id="divUpdateDelete">
-                            <input class="btn btn-warning btn-lg rounded-pill my-4" type="submit" value="Update" id="btnUpdate" name="btnUpdate" style="display: none;"> 
+                            <input class="btn btn-warning btn-lg rounded-pill my-4 mx-3" type="submit" value="Update" id="btnUpdate" name="btnUpdate" style="display: none;"> 
                             <input class="btn btn-danger btn-lg rounded-pill my-4" type="submit" value="Delete" id="btnDelete" name="btnDelete" style="display: none;">
                         </div>
-                        
-                        
                     </div>
                 </form>
-
-                <!-- <form action="/ub-mart-tambun/App/Util/add-nota-harian-temp.php" method="post">
-                    <div class="mb-1 row">
-                        <label for="transaksiBayar" class="col-form-label fs-5">Bayar</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="transaksiBayar" name="transaksiBayar">
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="transaksiKembalian" class="col-form-label fs-5">Kembalian</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="transaksiKembalian" name="transaksiKembalian" readonly>
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <input class="btn btn-primary btn-lg rounded-pill my-4" id="btnBayar" name="btnBayar" type="submit" value="Bayar">
-                    </div>
-                </form> -->
             </div>
         </section>
 
@@ -85,26 +64,31 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
             <!-- SPACING -->
         </section>
 
-        <section class="col-5">
-            <div class="container text-bg-light rounded-5 p-3">
-                <h3 class="text-center border-bottom">UB Mart</h3>
-                <p class="text-center lh-1">Kampung Kobak, RW 2, Desa Mekarsari</p>
-                <p class="text-center lh-1 border-bottom mb-3">Telp. 0891234714871</p>
-                <div class="container table-responsive p-3">
-                    <table class="table container border-bottom">
-                        <tbody>
-                            <tr>
-                                <th class="align-items-center text-start" scope="col-6">NOTA: </th>
-                                <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
-                            </tr>
-                            <tr>
-                                <th class="align-items-center text-start" scope="col-6">KASIR: ADMIN</th>
-                                <th class="align-items-center text-end" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i:s')?></span></th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- dinamis table -->
-                    <form action="" >
+        <section class="col-6">
+            <form action="" >
+                <div class="container text-bg-light rounded-5 p-3">
+                    <h3 class="text-center border-bottom">UB Mart</h3>
+                    <p class="text-center lh-1">Kampung Kobak, RW 2, Desa Mekarsari</p>
+                    <p class="text-center lh-1 border-bottom mb-3">Telp. 0891234714871</p>
+                    <div class="container table-responsive p-3">
+                        <table class="table container border-bottom">
+                            <tbody>
+                                <tr>
+                                    <input type="text" name="notaTransaksi" value="<?= "UB2022"; ?>" hidden> 
+                                    <th class="align-items-center text-start" scope="col-6">NOTA: <?= "UB2022"; ?></th>
+                                    <input type="text" name="tanggalInput" value="<?= date('d-m-Y') ?>" hidden> 
+                                    <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
+                                </tr>
+                                <tr>
+                                    <input type="text" name="usernameKasir" value="<?= "shafara354" ?>" hidden> <!-- to get kasir username -->
+                                    <th class="align-items-center text-start" scope="col-6">KASIR: ADMIN</th>
+                                    <input type="text" name="jamInput" value="<?php echo $timestamp = date('H:i')?>" hidden> <!-- to get value jam -->
+                                    <th class="align-items-center text-end" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i')?></span></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- dinamis table -->
+                        
                         <table class="table table-hover" id="tableStruk">
                             <thead>
                                 <tr>
@@ -150,9 +134,9 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                                 </tr>
                             </thead>
                         </table>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </section>
     </div>
     <script>
@@ -170,12 +154,7 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                         if(event.target.value != "" && $.trim(kodeBarang) == value.kode_barang ) {
                             // output
                             $("#namaBarangTransaksi").val(value.nama_barang);
-                            $("#hargaTransaksi").val(value.harga_jual);
-
-                            // set harga transaksi to rupiah format 
-                            var hargaBarang = $("#hargaTransaksi").val();
-                            hargaBarang = formatRupiah(hargaBarang, "Rp. ");
-                            $("#hargaTransaksi").val(hargaBarang);
+                            $("#hargaTransaksi").val(formatRupiah(value.harga_jual));
                             
                             // set max match to value stok
                             $("#qtyTransaksi").prop('max', value.stok);
@@ -184,32 +163,19 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                             if (value.stok <= 0) {
                                 $("#qtyTransaksi").prop('min', 0);
                                 $("#qtyTransaksi").val("0");
-                                $("#subTotalTransaksi").val("Rp. 0");
+                                $("#subTotalTransaksi").val("Rp 0");
                             } else {
                                 $("#qtyTransaksi").prop('min', 1);
                                 $("#qtyTransaksi").val("1");
-                                $("#subTotalTransaksi").val(value.harga_jual);
-
-                                // set subtotal format rupiah
-                                var subTotal = $("#subTotalTransaksi").val();
-                                subTotal = formatRupiah(subTotal, "Rp. ");
-                                $("#subTotalTransaksi").val(subTotal);
+                                $("#subTotalTransaksi").val(formatRupiah(value.harga_jual));
                             }
 
                             // merubah harga sesuai dengan jumlah barang
                             $("#qtyTransaksi").on('input', function() {
-                                // set harga transaksi to number
-                                var hargaTransaksi = $("#hargaTransaksi").val();
-                                hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
-
-                                var qtyTransaksi = $("#qtyTransaksi").val();
-                                var subTotal = hargaTransaksi * qtyTransaksi;
-                                $("#subTotalTransaksi").val(subTotal);
-
-                                // set sub total to format rupiah
-                                var subTotalRupiah = $("#subTotalTransaksi").val();
-                                subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
-                                $("#subTotalTransaksi").val(subTotalRupiah);
+                                // hitung harga * qty
+                                var qtyTransaksi = $(this).val();
+                                var subTotal = value.harga_jual * qtyTransaksi;
+                                $("#subTotalTransaksi").val(formatRupiah(subTotal));
 
                                 // max length
                                 if (this.value.length > 4) {
@@ -241,21 +207,21 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
             });
             
             // klik aktif table - start
-            $("#tableStruk tbody tr").on("click", function(){
+            $("#tableStruk tbody tr").on("click", function() {
                 // remove table-active in this row
                 if ($(this).hasClass('table-active') == true) {
                     $(this).removeClass('table-active');
+                    // reset form
+                    $("#kodeBarangTransaksi").val("");
+                    $("#namaBarangTransaksi").val("");
+                    $("#hargaTransaksi").val("");
+                    $("#qtyTransaksi").val("");
+                    $("#subTotalTransaksi").val("");
 
                     // show hide button
                     $("#btnTambah").show();
                     $("#btnUpdate").hide();
                     $("#btnDelete").hide();
-
-                    // reset form
-                    $("#namaBarangTransaksi").val("");
-                    $("#hargaTransaksi").val("");
-                    $("#qtyTransaksi").val("");
-                    $("#subTotalTransaksi").val("");
                 } else {
                     // add table active
                     $(this).addClass("table-active").siblings().removeClass("table-active");
@@ -271,17 +237,12 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
 
                     $("#qtyTransaksi").on('input', function() {
                         // set harga transaksi to number
-                        var hargaTransaksi = $("#hargaTransaksi").val();
-                        hargaTransaksi = hargaTransaksi.replace(/[^0-9]/g,'');
+                        var hargaTransaksi = $("#hargaTransaksi").val().replace(/[^0-9]/g,'');
 
-                        var qtyTransaksi = $("#qtyTransaksi").val();
+                        // hitung subtotal berdasarkan qtyTransaksi
+                        var qtyTransaksi = $(this).val();
                         var subTotal = hargaTransaksi * qtyTransaksi;
-                        $("#subTotalTransaksi").val(subTotal);
-
-                        // set sub total to format rupiah
-                        var subTotalRupiah = $("#subTotalTransaksi").val();
-                        subTotalRupiah = formatRupiah(subTotalRupiah, "Rp. ");
-                        $("#subTotalTransaksi").val(subTotalRupiah);
+                        $("#subTotalTransaksi").val(formatRupiah(subTotal));
                     });
                 }
             })
@@ -300,31 +261,22 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                     document.getElementById("kodeBarangTransaksi").value = this.cells[0].innerHTML;
                     document.getElementById("namaBarangTransaksi").value = this.cells[1].innerHTML;
                     document.getElementById("qtyTransaksi").value = this.cells[2].innerHTML;
-                    document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML, "Rp. ");
-                    document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML, "Rp. ");
+                    document.getElementById("hargaTransaksi").value = formatRupiah(this.cells[3].innerHTML.replace(/[^0-9]/g,''));
+                    document.getElementById("subTotalTransaksi").value = formatRupiah(this.cells[4].innerHTML.replace(/[^0-9]/g,''));
                 };
             }
 
             // cursor tr pointer
             $("#tableStruk tbody tr").css('cursor', 'pointer');
 
-            // format rupiah
-            function formatRupiah(angka, prefix) {
-                // var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                
-                var number_string = angka.replace(/[^,\d]/g, "").toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
-                }
-
-                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-                return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+            // rupiah format setText
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID', {
+                    style:'currency',
+                    currency:'IDR',
+                    minimumFractionDigits:0,
+                    maximumFractionDigits: 2
+                }).format(angka);
             }
 
             // function for find the total of subTotal
@@ -339,39 +291,28 @@ $notaHarianTemp = $laporanPenjualan->readNotaHarianTemp();
                 sumSubTotal += Number(tdText);
             }
 
-            // set to number 
-            $("#totalFromSubTotalRow").text(sumSubTotal);
-            var total = $("#totalFromSubTotalRow").text();
-            var output = (total/1000).toFixed(3);
-            $("#totalFromSubTotalRow").text("Rp. " + output);
+            // set number to rupiah format
+            $("#totalFromSubTotalRow").text(formatRupiah(sumSubTotal));
             
-
             // function bayar kembalian dari total
-            var totalHargaBayar = $("#totalFromSubTotalRow").text();
-            totalHargaBayar = totalHargaBayar.replace(/[^0-9]/g,'');
+            var totalHargaBayar = sumSubTotal;
             
             $("#transaksiBayar").on("input", function() {
                 // format rupiah in transaksi bayar
-                var bayarRupiah = $(this).val();
-                bayarRupiah = formatRupiah(bayarRupiah, "Rp. ");
-                $(this).val(bayarRupiah);
-
-                // set text to number
-                var transaksiBayar = $(this).val();
-                transaksiBayar = transaksiBayar.replace(/[^0-9]/g,'');
+                var bayarRupiah = $(this).val().replace(/[^0-9]/g,'');
+                var transaksiBayarRupiah = formatRupiah(bayarRupiah);
+                $(this).val(transaksiBayarRupiah);               
                 
                 // hitung kembalian
-                var kembalian = transaksiBayar - totalHargaBayar;
+                var kembalian = bayarRupiah - totalHargaBayar;
 
                 // minus on input
                 if (kembalian < 0) {
-                    $("#transaksiKembalian").val(kembalian);
+                    $("#transaksiKembalian").val(formatRupiah(kembalian));
                 } else {
                     // cetak transaksi kembalian
+                    kembalian = formatRupiah(kembalian);
                     $("#transaksiKembalian").val(kembalian);
-                    var kembalianRupiah = $("#transaksiKembalian").val();
-                    kembalianRupiah = formatRupiah(kembalianRupiah, "Rp. ");
-                    $("#transaksiKembalian").val(kembalianRupiah);
                 }
             });
         });

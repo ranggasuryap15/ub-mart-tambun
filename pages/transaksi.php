@@ -1,9 +1,40 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location:pages/login.php");
+}
+
+
 date_default_timezone_set('Asia/Jakarta');
 require_once (__DIR__ . "/../App/Class/Transaksi.php");
 require_once (__DIR__ . "/../App/Util.php");
+
 $laporanPenjualan = new Transaksi;
 $util = new Util;
+
+// generate nota custom
+$year = date("Y");
+$date = substr($year, -2) . date("md");
+$numberIncrement = 1;
+
+// cek today
+$today = date("Y-m-d");
+$checkDate = $laporanPenjualan->notaCustom($today);
+
+// increment nota
+foreach ($checkDate as $row) :
+    $nota = $row['nota'];
+
+    if ($nota != "") {
+        // increment nota 
+        $nota = explode("-",$nota);
+        $cut = (int) $nota[2];
+        $nota = "UB-" . $date . "-" . str_pad($cut + 1, 3, 0, STR_PAD_LEFT);
+    } else {
+        $nota = "UB-" . $date . "-" . str_pad($numberIncrement, 3, "0", STR_PAD_LEFT);
+    }
+endforeach;
 ?>
 <head>
     <title>Kasir | Transaksi</title>
@@ -74,8 +105,8 @@ $util = new Util;
                         <table class="table container border-bottom">
                             <tbody>
                                 <tr>
-                                    <input type="text" name="notaTransaksi" value="<?= "UB2022"; ?>" hidden> 
-                                    <th class="align-items-center text-start" scope="col-6">NOTA: <?= "UB2022"; ?></th>
+                                    <input type="text" name="notaTransaksi" value="<?= $nota; ?>" hidden> 
+                                    <th class="align-items-center text-start" scope="col-6">NOTA: <?php echo $nota; ?></th>
                                     <input type="text" name="tanggalInput" value="<?= date('d-m-Y') ?>" hidden> 
                                     <th class="align-items-center text-end" scope="col-6">TGL: <?= date('d-m-Y') ?></th>
                                 </tr>

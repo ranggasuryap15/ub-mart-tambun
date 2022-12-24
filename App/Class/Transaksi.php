@@ -74,4 +74,13 @@ class Transaksi extends Config {
         $stmt->bindParam('kode_barang', $kode_barang);
         $stmt->execute();
     }
+
+    public function notaCustom($tanggal) {
+        $sql = "SELECT nota, tanggal FROM kasir_ub_mart.nota_harian WHERE tanggal = :tanggal ORDER BY nota DESC LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam('tanggal', $tanggal);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 }

@@ -16,6 +16,8 @@ $util = new Util;
 $year = date("Y");
 $date = substr($year, -2) . date("md");
 $numberIncrement = 1;
+// default nota 
+$nota = "UB-" . $date . "-" . str_pad($numberIncrement, 3, "0", STR_PAD_LEFT);
 
 // cek today
 $today = date("Y-m-d");

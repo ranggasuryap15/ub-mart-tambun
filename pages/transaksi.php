@@ -178,7 +178,6 @@ endforeach;
             var url = "/ub-mart-tambun/App/Util/load-barang-barcode.php"; // url json from mysql
             
             $.getJSON(url, function(data) {
-
                 $("#kodeBarangTransaksi").on('input keypress', function (event) {
                     var kodeBarangInput = this.value;
 
@@ -234,9 +233,9 @@ endforeach;
                     // hitung sub total berdasarkan harga
                     var qtyTransaksi = $(this).val();
                     var hargaBarang = $("#hargaTransaksi").val();
-                    hargaBarang.replace(/[^0-9]/g,'');
+                    hargaBarang = hargaBarang.replace(/[^0-9]/g,'');
                     var subTotal = qtyTransaksi * hargaBarang;
-
+                    
                     // set sub total
                     $("#subTotalTransaksi").val(formatRupiah(subTotal));
                 });

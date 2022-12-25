@@ -1,11 +1,10 @@
 <?php
+
 session_start();
 require_once (__DIR__ . "/../App/Class/Akun.php");
 $akun = new Akun;
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 

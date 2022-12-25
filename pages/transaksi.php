@@ -209,6 +209,24 @@ endforeach;
                             $("#subTotalTransaksi").val(formatRupiah(hargaBarang));
                         }
                     } 
+
+                    // reset form ketika kode barang tidak match
+                    $("#kodeBarangTransaksi").on('input', function() {
+                        if (this.value != kodeBarang) {
+                            $("#namaBarangTransaksi").val("");
+                            $("#hargaTransaksi").val("");
+                            $("#qtyTransaksi").val("");
+                            $("#subTotalTransaksi").val("");
+
+                            // show hide button
+                            $("#btnTambah").show();
+                            $("#btnUpdate").hide();
+                            $("#btnDelete").hide();
+
+                            // remove active row 
+                            $("#tableStruk tbody tr").removeClass("table-active");
+                        }
+                    });
                 });
 
                 // auto calculate sub total
@@ -222,25 +240,6 @@ endforeach;
                     // set sub total
                     $("#subTotalTransaksi").val(formatRupiah(subTotal));
                 });
-
-                // reset form ketika kode barang tidak match
-                $("#kodeBarangTransaksi").on('input', function() {
-                    if (this.value != kodeBarang) {
-                        $("#namaBarangTransaksi").val("");
-                        $("#hargaTransaksi").val("");
-                        $("#qtyTransaksi").val("");
-                        $("#subTotalTransaksi").val("");
-
-                        // show hide button
-                        $("#btnTambah").show();
-                        $("#btnUpdate").hide();
-                        $("#btnDelete").hide();
-
-                        // remove active row 
-                        $("#tableStruk tbody tr").removeClass("table-active");
-                    }
-                });
-
                 
                 $("#tableStruk tbody tr").on('click', function() {
                     var currentRow = $(this).closest('tr');

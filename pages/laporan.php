@@ -32,6 +32,7 @@ $util = new Util;
                                     <th scope="col-2" class="text-center">Harga Barang</th>
                                     <th scope="col-2" class="text-center">QTY</th>
                                     <th scope="col-2" class="text-center">Sub Total</th>
+                                    <th scope="col-2" class="text-center">Profit</th>
                                     <th scope="col-2" class="text-center">Kasir</th>
                                 </tr>
                             </thead>
@@ -45,6 +46,7 @@ $util = new Util;
                                         <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['harga_jual']); ?></td>
                                         <td scope='col-2' class='col-1 text-center'><?php echo $row['kuantitas']; ?></td>
                                         <td scope='col-2' class='col-1 text-center'><?php echo $util->rupiah($row['sub_total']); ?></td>
+                                        <td scope='col-2' class='col-1 text-center'><?php echo $util->rupiah($row['profit'] * $row['kuantitas']); ?></td>
                                         <td scope='col-2' class='col-2 text-center'><?php echo $row['kasir']; ?></td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -27,7 +27,7 @@ if (!isset($_SESSION['username'])) {
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow p-3">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
                 <img class="" src="assets/images/ubmart.png" alt="" height="30">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 20, 2022 at 02:36 PM
+-- Generation Time: Dec 26, 2022 at 11:46 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -67,14 +67,14 @@ CREATE TABLE `data_barang` (
 --
 
 INSERT INTO `data_barang` (`kode_barang`, `nama_barang`, `harga_pokok`, `harga_jual`, `profit`, `stok`, `satuan`, `tanggal`) VALUES
-('079567350118', 'WD-40 Contact Cleaner', 20000, 25000, 5000, 40, 'pcs', '2022-11-26'),
+('079567350118', 'WD-40 Contact Cleaner', 20000, 25000, 5000, 0, 'pcs', '2022-11-26'),
 ('8901234775', 'Cimory Botol', 9000, 10000, 1000, 0, 'pcs', '2022-11-05'),
-('8901234776', 'Milo', 1800, 2000, 200, 20, 'pcs', '2022-11-05'),
+('8901234776', 'Milo', 1800, 2000, 200, 9, 'pcs', '2022-11-05'),
 ('8901234778', 'Sanqua Gelas', 20000, 22000, 2000, 25, 'dus', '2022-11-05'),
 ('8901234779', 'Sanqua Botol', 40000, 43000, 3000, 20, 'dus', '2022-11-05'),
-('8901234780', 'Beras', 8000, 8500, 500, 30, 'liter', '2022-11-05'),
+('8901234780', 'Beras', 8000, 8500, 500, 25, 'liter', '2022-11-05'),
 ('8992745326229', 'Stella Green Fantasy', 12000, 15000, 3000, 10, 'pcs', '2022-11-24'),
-('8996001600269', 'Le Minerale Botol', 40000, 44000, 4000, 10, 'dus', '2022-11-05');
+('8996001600269', 'Le Minerale Botol', 40000, 44000, 4000, 13, 'dus', '2022-11-05');
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,7 @@ CREATE TABLE `laporan_penjualan` (
   `kuantitas` int(11) NOT NULL,
   `sub_total` int(11) NOT NULL,
   `kasir` varchar(50) NOT NULL,
-  `nota` varchar(12) NOT NULL
+  `nota` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -96,10 +96,29 @@ CREATE TABLE `laporan_penjualan` (
 --
 
 INSERT INTO `laporan_penjualan` (`id`, `kode_barang`, `kuantitas`, `sub_total`, `kasir`, `nota`) VALUES
-(1, '8901234775', 2, 20000, 'shafara354', 'UB061122001'),
-(2, '8901234776', 3, 6000, 'shafara354', 'UB061122001'),
-(4, '8901234778', 1, 22000, 'rizqi354', 'UB061122002'),
-(5, '8901234779', 1, 43000, 'rizqi354', 'UB061122002');
+(11, '8901234780', 5, 42500, 'shafara354', 'UB-221225-001'),
+(12, '079567350118', 1, 25000, 'shafara354', 'UB-221225-001'),
+(13, '8901234776', 10, 20000, 'shafara354', 'UB-221225-001'),
+(14, '8996001600269', 6, 264000, 'shafara354', 'UB-221225-002'),
+(15, '8901234776', 1, 2000, 'shafara354', 'UB-221225-003'),
+(16, '8996001600269', 5, 220000, 'shafara354', 'UB-221225-003'),
+(17, '8996001600269', 1, 44000, 'shafara354', 'UB-221226-001'),
+(18, '079567350118', 40, 1000000, 'shafara354', 'UB-221226-001'),
+(19, '8996001600269', 1, 44000, 'shafara354', 'UB-221226-002');
+
+--
+-- Triggers `laporan_penjualan`
+--
+DELIMITER $$
+CREATE TRIGGER `stokKeluar` AFTER INSERT ON `laporan_penjualan` FOR EACH ROW BEGIN 
+	UPDATE data_barang SET stok = stok - NEW.kuantitas
+    WHERE kode_barang = NEW.kode_barang;
+
+	DELETE FROM transaksi_struk_temp
+    WHERE kasir=NEW.kasir;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -108,7 +127,7 @@ INSERT INTO `laporan_penjualan` (`id`, `kode_barang`, `kuantitas`, `sub_total`, 
 --
 
 CREATE TABLE `nota_harian` (
-  `nota` varchar(12) NOT NULL,
+  `nota` varchar(14) NOT NULL,
   `tanggal` date NOT NULL,
   `bayar` int(15) NOT NULL,
   `kembalian` int(15) NOT NULL,
@@ -120,31 +139,11 @@ CREATE TABLE `nota_harian` (
 --
 
 INSERT INTO `nota_harian` (`nota`, `tanggal`, `bayar`, `kembalian`, `kasir`) VALUES
-('UB061122001', '2022-11-06', 20000, 5000, 'shafara354'),
-('UB061122002', '2022-11-06', 20000, 5000, 'shafara354'),
-('UB061122003', '2022-11-06', 20000, 5000, 'rizqi354');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nota_harian_temp`
---
-
-CREATE TABLE `nota_harian_temp` (
-  `id` int(11) NOT NULL,
-  `nota` varchar(12) NOT NULL,
-  `tanggal` date NOT NULL,
-  `bayar` int(15) NOT NULL,
-  `kembalian` int(15) NOT NULL,
-  `kasir` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nota_harian_temp`
---
-
-INSERT INTO `nota_harian_temp` (`id`, `nota`, `tanggal`, `bayar`, `kembalian`, `kasir`) VALUES
-(5, 'UB12345', '2022-11-06', 200000, 27000, 'shafara354');
+('UB-221225-001', '2022-12-25', 90000, 2500, 'shafara354'),
+('UB-221225-002', '2022-12-25', 270000, 6000, 'shafara354'),
+('UB-221225-003', '2022-12-25', 230000, 8000, 'shafara354'),
+('UB-221226-001', '2022-12-26', 1050000, 6000, 'shafara354'),
+('UB-221226-002', '2022-12-26', 50000, 6000, 'shafara354');
 
 -- --------------------------------------------------------
 
@@ -158,16 +157,9 @@ CREATE TABLE `transaksi_struk_temp` (
   `nama_barang` varchar(100) NOT NULL,
   `harga_jual` int(11) NOT NULL,
   `kuantitas` int(11) NOT NULL,
-  `sub_total` int(11) NOT NULL
+  `sub_total` int(11) NOT NULL,
+  `kasir` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transaksi_struk_temp`
---
-
-INSERT INTO `transaksi_struk_temp` (`id`, `kode_barang`, `nama_barang`, `harga_jual`, `kuantitas`, `sub_total`) VALUES
-(31, '8996001600269', 'Le Minerale Botol', 44000, 1, 44000),
-(36, '8901234779', 'Sanqua Botol', 43000, 3, 129000);
 
 --
 -- Indexes for dumped tables
@@ -202,13 +194,6 @@ ALTER TABLE `nota_harian`
   ADD KEY `FK_Kasir` (`kasir`);
 
 --
--- Indexes for table `nota_harian_temp`
---
-ALTER TABLE `nota_harian_temp`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nota` (`nota`);
-
---
 -- Indexes for table `transaksi_struk_temp`
 --
 ALTER TABLE `transaksi_struk_temp`
@@ -223,19 +208,13 @@ ALTER TABLE `transaksi_struk_temp`
 -- AUTO_INCREMENT for table `laporan_penjualan`
 --
 ALTER TABLE `laporan_penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `nota_harian_temp`
---
-ALTER TABLE `nota_harian_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `transaksi_struk_temp`
 --
 ALTER TABLE `transaksi_struk_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- Constraints for dumped tables

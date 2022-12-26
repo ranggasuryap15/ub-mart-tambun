@@ -25,7 +25,7 @@ $akun = new Akun;
             <div class="mb-1 row">
                 <label for="password" class="col-form-label fs-5">Password</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="username" placeholder="Password" name="password">
+                    <input type="password" class="form-control" id="username" placeholder="Password" name="password">
                 </div>
             </div>
             <input class="btn btn-primary btn-lg rounded-pill my-4" type="submit" value="Login" id="btnLogin" name="btnLogin">

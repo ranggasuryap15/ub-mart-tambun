@@ -23,11 +23,12 @@ class Transaksi extends Config {
     }
 
     // insert nota
-    public function insertNotaHarian($nota, $tanggal, $bayar, $kembalian, $kasir) {
-        $sql = "INSERT INTO kasir_ub_mart.nota_harian (nota, tanggal, bayar, kembalian, kasir) VALUES (:nota, :tanggal, :bayar, :kembalian, :kasir)";
+    public function insertNotaHarian($nota, $tanggal, $total, $bayar, $kembalian, $kasir) {
+        $sql = "INSERT INTO kasir_ub_mart.nota_harian (nota, tanggal, total, bayar, kembalian, kasir) VALUES (:nota, :tanggal, :total, :bayar, :kembalian, :kasir)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam('nota', $nota);
         $stmt->bindParam('tanggal', $tanggal);
+        $stmt->bindParam('total', $total);
         $stmt->bindParam('bayar', $bayar);
         $stmt->bindParam('kembalian', $kembalian);
         $stmt->bindParam('kasir', $kasir);
@@ -44,7 +45,7 @@ class Transaksi extends Config {
 
             if ($rowCount > 0) {
                 // update data jika kode barang ada yang sama
-                $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=kuantitas + :kuantitas, sub_total=harga_jual * kuantitas WHERE kode_barang=:kode_barang";
+                $sql = "UPDATE kasir_ub_mart.transaksi_struk_temp SET kuantitas=:kuantitas, sub_total=harga_jual * kuantitas WHERE kode_barang=:kode_barang";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->bindParam('kuantitas', $kuantitas);
                 $stmt->bindParam('kode_barang', $kode_barang);

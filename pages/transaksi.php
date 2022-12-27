@@ -11,7 +11,7 @@ require_once (__DIR__ . "/../App/Util.php");
 
 $laporanPenjualan = new Transaksi;
 $util = new Util;
-
+$transaksi_temp = $laporanPenjualan->readTransaksiTemp($_SESSION['username']);
 // generate nota custom
 $year = date("Y");
 $date = substr($year, -2) . date("md");
@@ -115,7 +115,7 @@ endforeach;
                                 <tr>
                                     <input type="text" name="usernameKasir" value="<?= $_SESSION['username']; ?>" hidden> <!-- to get kasir username -->
                                     <th class="align-items-center text-start" scope="col-6">KASIR: <?= $_SESSION['nama_kasir']; ?></th>
-                                    <input type="text" name="jamInput" value="<?php echo $timestamp = date('H:i')?>" hidden> <!-- to get value jam -->
+                                    <input type="text" name="jamInput" value="<?php echo $timestamp = date('H:i:s')?>" hidden> <!-- to get value jam -->
                                     <th class="align-items-center text-end" scope="col-6"><span id="timestamp">JAM: <?php echo $timestamp = date('H:i')?></span></th>
                                 </tr>
                             </tbody>
@@ -133,8 +133,7 @@ endforeach;
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider" id="tBodyStruk">
-                                <?php $laporanPenjualan = $laporanPenjualan->readTransaksiTemp($_SESSION['username']);?>
-                                <?php foreach($laporanPenjualan as $row) : ?>
+                                <?php foreach($transaksi_temp as $row) : ?>
                                     <tr>
                                         <td scope="col-4" class="text-start"><?php echo $row['kode_barang']; ?></td>
                                         <td scope="col-4" class="text-center"><?php echo $row['nama_barang']; ?></td>
@@ -142,6 +141,7 @@ endforeach;
                                         <td scope="col-3" class="text-center rupiah"><?php echo $util->rupiah($row['harga_jual']); ?></td>
                                         <td scope="col-3" class="text-end rupiah"><?php echo $util->rupiah($row['sub_total']); ?></td>
                                     </tr>
+                                    <?php $total[] = $row['sub_total']; $totalHarga = array_sum($total); // for get total harga ?> 
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -150,7 +150,8 @@ endforeach;
                             <thead>
                                 <tr>
                                     <th class="align-items.center text-start" scope="col-6">Total</th>
-                                    <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow"></td>
+                                    <input type="text" value="<?= $totalHarga; ?>" id="total" name="total" hidden>
+                                    <td class="align-items.center text-end" scope="col-6" id="totalFromSubTotalRow"><?= $util->rupiah($totalHarga); ?></td>
                                 </tr>
                                 <tr>
                                     <th class="align-items.center text-start" scope="col-6">Bayar</th>
@@ -330,23 +331,9 @@ endforeach;
                     maximumFractionDigits: 2
                 }).format(angka);
             }
-
-            // function for find the total of subTotal
-            var sumSubTotal = 0;
-            var trCount = $("#tableStruk tbody tr").length;
-
-            for (i = 0; i < trCount; i++) {
-
-                var tdText = $("#tableStruk tbody tr:eq(" + i + ") td:eq(4)").text();
-                // set text to number
-                tdText = tdText.replace(/[^0-9]/g,'');
-                sumSubTotal += Number(tdText);
-            }
-            // set number to rupiah format
-            $("#totalFromSubTotalRow").text(formatRupiah(sumSubTotal));
             
             // function bayar kembalian dari total
-            var totalHargaBayar = sumSubTotal;
+            var totalHargaBayar = $("#totalFromSubTotalRow").text().replace(/[^0-9]/g,'');
             
             $("#transaksiBayar").on("input", function() {
                 // format rupiah in transaksi bayar

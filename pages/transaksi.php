@@ -1,8 +1,7 @@
 <?php
 
-session_start();
 if (!isset($_SESSION['username'])) {
-    header("location:pages/login.php");
+    header("location:dashboardkasir.php");
 }
 
 date_default_timezone_set('Asia/Jakarta');

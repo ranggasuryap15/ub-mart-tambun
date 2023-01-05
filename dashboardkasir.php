@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location:pages/login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +25,32 @@
 
 <body>
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow p-3">
-        <div class="container justify-content-center">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow p-3 align-center">
+        <div class="container">
             <a class="navbar-brand" href="#">
                 <img class="" src="assets/images/ubmart.png" alt="" height="30">
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-5">
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" href="dashboardkasir.php?p=transaksi">Transaksi</a>
+                    </li>
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" href="dashboardkasir.php?p=barang">Barang</a>
+                    </li>
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" href="dashboardkasir.php?p=laporan">Laporan</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Keluar</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -40,12 +68,12 @@
             echo 'Halaman tidak ditemukan! :(';
         }
     } else {
-        include($pages_dir . '/login.php');
+        include($pages_dir . '/transaksi.php');
     }    
     ?>
 
     <!-- FOOTER -->
-    <footer class="footer text-bg-dark fixed-bottom">
+    <footer class="footer text-bg-dark">
         <div class="container mt-4">
             <div class="row py-4">
                 <div class="col-md-12 text-center">

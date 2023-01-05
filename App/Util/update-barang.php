@@ -16,11 +16,11 @@ if (isset($_POST['updateButton'])) {
         $errorMessage = "Berhasil update stok";
 
         if (!isset($result)) {
-            header('location:../../index.php?p=barang');
+            header('location:../../dashboardkasir.php?p=barang');
         }
     } else {
         $errorMessage = "Gagal update stok";
-        header('location:../../index.php?p=barang');
+        header('location:../../dashboardkasir.php?p=barang');
     }   
 }
 ?>

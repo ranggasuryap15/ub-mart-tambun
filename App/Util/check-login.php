@@ -21,9 +21,9 @@ if (isset($_POST['btnLogin'])) {
 
             $_SESSION['nama_kasir'] = $nama[0]; // ambil nama depan
             $_SESSION['username'] = $username;
-            header('location:../../index.php');
+            header('location:../../dashboardkasir.php');
         } else {
-            header('location:../../pages/login.php');
+            header('location:../../dashboardkasir.php');
         }
     }
 }

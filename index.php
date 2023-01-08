@@ -45,7 +45,7 @@
     ?>
 
     <!-- FOOTER -->
-    <footer class="footer text-bg-dark fixed-bottom">
+    <footer class="footer text-bg-dark">
         <div class="container mt-4">
             <div class="row py-4">
                 <div class="col-md-12 text-center">

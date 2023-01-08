@@ -50,7 +50,7 @@ endforeach;
                     <div class="mb-1 row">
                         <label for="" class="col-form-label fs-5">Tgl. Transaksi</label>
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" id="tglTransaksi" value="<?php echo date('Y-m-d'); ?>">
+                            <input type="text" readonly disabled class="form-control" id="tglTransaksi" value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
                     <div class="mb-1 row">

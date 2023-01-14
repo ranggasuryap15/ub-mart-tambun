@@ -1,4 +1,5 @@
 <?php
+//require_once "authorization_kasir.php";
 
 if (!isset($_SESSION['username'])) {
     header("location:dashboardkasir.php");

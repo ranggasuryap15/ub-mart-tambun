@@ -33,25 +33,43 @@ $util = new Util;
                                     <th scope="col-2" class="text-center">QTY</th>
                                     <th scope="col-2" class="text-center">Sub Total</th>
                                     <th scope="col-2" class="text-center">Profit</th>
-                                    <th scope="col-2" class="text-center">Kasir</th>
                                 </tr>
                             </thead>
                             <tbody id="table">
                                 <?php $laporanPenjualan = $transaksi->readLaporanPenjualan($_SESSION['username']); ?>
                                 <?php foreach($laporanPenjualan as $row) : ?>
-                                    <tr>
-                                        <td scope='col' class='col-2 text-center'><?php echo $row['nota']; ?></td>
-                                        <td scope='col' class='col-2 text-center'><?php echo $row['kode_barang']; ?></td>
-                                        <td scope='col' class='col-2 text-center'><?php echo $row['nama_barang']; ?></td>
-                                        <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['harga_jual']); ?></td>
-                                        <td scope='col-2' class='col-1 text-center'><?php echo $row['kuantitas']; ?></td>
-                                        <td scope='col-2' class='col-1 text-center'><?php echo $util->rupiah($row['sub_total']); ?></td>
-                                        <td scope='col-2' class='col-1 text-center'><?php echo $util->rupiah($row['profit'] * $row['kuantitas']); ?></td>
-                                        <td scope='col-2' class='col-2 text-center'><?php echo $row['kasir']; ?></td>
-                                    </tr>
+                                <tr>
+                                    <td scope='col' class='col-2 text-center'><?php echo $row['nota']; ?></td>
+                                    <td scope='col' class='col-2 text-center'><?php echo $row['kode_barang']; ?></td>
+                                    <td scope='col' class='col-2 text-center'><?php echo $row['nama_barang']; ?></td>
+                                    <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['harga_jual']); ?></td>
+                                    <td scope='col-2' class='col-1 text-center'><?php echo $row['kuantitas']; ?></td>
+                                    <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['sub_total']); ?></td>
+                                    <td scope='col-2' class='col-2 text-center'><?php echo $util->rupiah($row['profit'] * $row['kuantitas']);  ?></td>
+                                </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                
+                                <!-- page berdasarkan jumlah data -->
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </section>

@@ -7,6 +7,8 @@ $transaksi = new Transaksi;
 // for nota harian
 $nota = $_POST['notaTransaksi'];
 $tanggal = $_POST['tanggalInput'];
+$jam = $_POST['jamInput'];
+$total = $_POST['total'];
 $bayar = $_POST['transaksiBayar'];
 $kembalian = $_POST['transaksiKembalian'];
 $kasir = $_SESSION['username'];
@@ -20,7 +22,7 @@ $kembalian = preg_replace('/[^0-9]/', '', $kembalian);
 
 if (isset($_POST['btnSimpanTransaksi'])) {
     if ($cutKembalian[0] != "-") {
-        $transaksi->insertNotaHarian($nota, $tanggal, $bayar, $kembalian, $kasir);
+        $transaksi->insertNotaHarian($nota, $tanggal, $jam, $total, $bayar, $kembalian, $kasir);
         $transaksiTemp = $transaksi->readTransaksiTemp($kasir);
         foreach ($transaksiTemp as $row) :
             $kodeBarang = $row['kode_barang'];

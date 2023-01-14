@@ -37,6 +37,7 @@ foreach ($checkDate as $row) :
         $nota = "UB-" . $date . "-" . str_pad($numberIncrement, 3, "0", STR_PAD_LEFT);
     }
 endforeach;
+
 ?>
 <head>
     <title>Kasir | Transaksi</title>

@@ -80,25 +80,25 @@ class Barang extends Config {
     // Setter Getter AKhir
 
     // Function for table data_barang
-    public function createBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
-        $sql = "INSERT INTO data_barang (kode_barang, nama_barang, harga_pokok, harga_jual, profit, stok, satuan, tanggal) VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
-        $data = $this->config->prepare($sql);
-        $data->bindParam('kode_barang', $kode_barang);
-        $data->bindParam('nama_barang', $nama_barang);
-        $data->bindParam('harga_pokok', $harga_pokok);
-        $data->bindParam('harga_jual', $harga_jual);
-        $data->bindParam('profit', $profit);
-        $data->bindParam('stok', $stok);
-        $data->bindParam('satuan', $satuan);
-        $data->bindParam('tanggal', $tanggal);
+    // public function createBarang($kode_barang, $nama_barang, $harga_pokok, $harga_jual, $profit, $stok, $satuan, $tanggal) {
+    //     $sql = "INSERT INTO data_barang (kode_barang, nama_barang, harga_pokok, harga_jual, profit, stok, satuan, tanggal) VALUES (:kode_barang, :nama_barang, :harga_pokok, :harga_jual, :profit, :stok, :satuan, :tanggal)";
+    //     $data = $this->config->prepare($sql);
+    //     $data->bindParam('kode_barang', $kode_barang);
+    //     $data->bindParam('nama_barang', $nama_barang);
+    //     $data->bindParam('harga_pokok', $harga_pokok);
+    //     $data->bindParam('harga_jual', $harga_jual);
+    //     $data->bindParam('profit', $profit);
+    //     $data->bindParam('stok', $stok);
+    //     $data->bindParam('satuan', $satuan);
+    //     $data->bindParam('tanggal', $tanggal);
 
-        $data->execute($data);
-        return $data->rowCount();
-    }
+    //     $data->execute($data);
+    //     return $data->rowCount();
+    // }
 
     public function readBarang() 
     {
-        $sql = "SELECT * FROM kasir_ub_mart.data_barang ORDER BY nama_barang ASC";
+        $sql = "SELECT * FROM data_barang ORDER BY nama_barang ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -108,7 +108,7 @@ class Barang extends Config {
     public function updateStok($kode_barang, $stok) 
     {
         try {
-            $sql = "UPDATE kasir_ub_mart.data_barang SET stok=:stok WHERE kode_barang=:kode_barang";
+            $sql = "UPDATE data_barang SET stok=:stok WHERE kode_barang=:kode_barang";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam('stok', $stok);
             $stmt->bindParam('kode_barang', $kode_barang);

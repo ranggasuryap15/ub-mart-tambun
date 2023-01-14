@@ -8,7 +8,7 @@ class Config {
     private const DBPASS = "";
     protected $pdo = null;
 
-    private $dsn = "mysql:host=". self::DBHOST . ":" . self::DBPORT . ";dbnames=" . self::DBNAME;
+    private $dsn = "mysql:host=". self::DBHOST . ":" . self::DBPORT . ";dbname=" . self::DBNAME;
 
     // method for connection to the database
     public function __construct()
